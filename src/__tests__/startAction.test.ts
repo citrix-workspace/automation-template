@@ -1,13 +1,11 @@
 import { it, step } from '../../init';
 import { Workspace } from '../helpers/workspace';
+import { config } from '../../config';
+
+const { workspaceUrl, workspaceUsername, workspacePassword, identityProvider } = config;
 
 const workspace = new Workspace();
-
 const FIXTURE_NAME = '';
-const workspaceUrl = '';
-const workspaceUsername = '';
-const workspacePassword = '';
-const identityProvider = '';
 const actionName = '';
 
 describe(FIXTURE_NAME, () => {
