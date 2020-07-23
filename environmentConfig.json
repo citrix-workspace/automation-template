@@ -1,0 +1,26 @@
+{
+    "ENV1": {
+        "CONFIG_CLOUD_URL": "",
+        "CONFIG_CUSTOMER_NAME": "",
+        "CONFIG_BUILDER_URL": "",
+        "CONFIG_WORKSPACE_URL": "",
+        "CONFIG_CUSTOMER_ID": "",
+        "CONFIG_CLOUD_ENVIRONMENT": "",
+        "CONFIG_ATHENA_CLIENT_ID": "",
+        "CONFIG_CWA_API": "",
+        "CONFIG_IDP": "",
+        "CONFIG_MFA": ""
+    },
+    "ENV2": {
+        "CONFIG_CLOUD_URL": "",
+        "CONFIG_CUSTOMER_NAME": "",
+        "CONFIG_BUILDER_URL": "",
+        "CONFIG_WORKSPACE_URL": "",
+        "CONFIG_CUSTOMER_ID": "",
+        "CONFIG_CLOUD_ENVIRONMENT": "",
+        "CONFIG_ATHENA_CLIENT_ID": "",
+        "CONFIG_CWA_API": "",
+        "CONFIG_IDP": "",
+        "CONFIG_MFA": ""
+    }
+}
