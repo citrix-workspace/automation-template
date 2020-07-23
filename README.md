@@ -1,8 +1,39 @@
 # automation-template
 
 ## About this project
-> share boilerplate code and directory sturcture acroos the projects
+ share boilerplate code and directory sturcture acroos the projects
 
+## Folder Structure
+
+After creation, your project should look like this:
+
+```
+automation-template/
+  artifacts/
+  node_modules/
+  README.md
+  .prettierrc
+  .gitignore
+  config.ts
+  init.ts
+  jest.config.js
+  jest.setup.js
+  package.json
+  README.md
+  tsconfig.json
+  src/
+    __tests__/
+    startAction.test.ts
+    helpers/
+    api.ts
+    citrixCloud.ts
+    microappsAdmin.ts
+    workspace.ts
+    types/
+    citrixCloud.ts.ts
+    microappsAdmin.ts
+    workspace.ts
+```
 ## Getting Started
 
 ### Installation
