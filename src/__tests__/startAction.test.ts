@@ -2,21 +2,21 @@ import { it, step } from '../../init';
 import { Workspace } from '../helpers/workspace';
 import { config } from '../../config';
 
-const { workspaceUrl, workspaceUsername, workspacePassword, identityProvider } = config;
+const { workspaceUrl, workspaceUsername, workspacePassword, workspaceIdentityProvider } = config;
 
 const workspace = new Workspace();
-const FIXTURE_NAME = '';
-const actionName = '';
+const FIXTURE_NAME = 'aaa';
+const actionName = 'aaa';
 
 describe(FIXTURE_NAME, () => {
     it(FIXTURE_NAME, async ({ context, page }) => {
         await step(context)('Login to Workspace', async () => {
             await workspace.login({
                 page,
-                url: workspaceUrl,
-                username: workspaceUsername,
-                password: workspacePassword,
-                idp: identityProvider,
+                workspaceUrl,
+                workspaceUsername,
+                workspacePassword,
+                workspaceIdentityProvider,
             });
         });
 

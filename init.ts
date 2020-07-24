@@ -124,3 +124,14 @@ export const step = (context: BrowserContext) => async (stepName: string, func: 
         throw e;
     }
 };
+
+
+export const run = async (runName: string, func: () => any) => {
+    try {
+        await func();
+        console.info(ts(),`✅ ${runName}`);
+    } catch (e) {
+        console.info(ts(),`❌ ${runName}`);
+        throw e;
+    }
+};
