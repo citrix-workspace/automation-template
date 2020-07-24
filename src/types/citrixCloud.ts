@@ -4,16 +4,16 @@ export type GetAuthenticatorCode = {
   
   export type GetCitrixCloudTokens = {
     cwaAPI: string;
-    customerId: string;
-    clientId: string;
-    clientSecret: string;
+    citrixCloudCustomerId: string;
+    citrixCloudClientId: string;
+    citrixCloudClientSecret: string;
   };
   
   export type GetCCBearerToken = {
     cwaAPI: string;
-    customerId: string;
-    clientId: string;
-    clientSecret: string;
+    citrixCloudCustomerId: string;
+    citrixCloudClientId: string;
+    citrixCloudClientSecret: string;
   };
   
   export type CreateAuthInstance = {

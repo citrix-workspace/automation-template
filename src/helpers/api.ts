@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GetCitrixCloudTokens } from "../types/citrixCloud.ts";
+import { GetCitrixCloudTokens } from "../types/citrixCloud";
 import {
   addApp,
   getBundleCatalogue,
@@ -25,40 +25,31 @@ export class API {
   /**
    * Get Citrix Cloud Tokens
    * @param {string} cwaAPI - Api Environmet
-   * @param {string} customerId - Customer Id
-   * @param {string} clientId - Client Id
-   * @param {string} clientSecret - Client Secret
+   * @param {string} citrixCloudCustomerId - Customer Id
+   * @param {string} citrixCloudClientId - Client Id
+   * @param {string} citrixCloudClientSecret - Client Secret
    */
 
-  async getCitrixCloudTokens({ cwaAPI, customerId, clientId, clientSecret }: GetCitrixCloudTokens) {
+  async getCitrixCloudTokens({ cwaAPI, citrixCloudCustomerId, citrixCloudClientId, citrixCloudClientSecret }: GetCitrixCloudTokens) {
     try {
       return await axios({
         timeout: 180000,
-        url: `https://trust.${cwaAPI}.net/${customerId}/tokens/clients`,
+        url: `https://trust.${cwaAPI}.net/${citrixCloudCustomerId}/tokens/clients`,
         method: "POST",
         data: {
-          clientId,
-          clientSecret,
+          citrixCloudClientId,
+          citrixCloudClientSecret,
         },
       });
     } catch (error) {
       throw error.stack;
     }
   }
-
   
-  /**
-   * Get Citrix Cloud Tokens
-   * @param {string} cwaAPI - Api Environmet
-   * @param {string} customerId - Customer Id
-   * @param {string} clientId - Client Id
-   * @param {string} clientSecret - Client Secret
-   */
-  
-  async getIntegrations({ authInstance, builderUrl }: GetIntegrations) {
+  async getIntegrations({ authInstance, microappsAdminUrl }: GetIntegrations) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/service`,
+        url: `${microappsAdminUrl}/api/service`,
         method: "GET",
       });
     } catch (error) {
@@ -66,10 +57,10 @@ export class API {
     }
   }
 
-  async getBundleCatalogue({ authInstance, builderUrl }: getBundleCatalogue) {
+  async getBundleCatalogue({ authInstance, microappsAdminUrl }: getBundleCatalogue) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/bundleCatalogue`,
+        url: `${microappsAdminUrl}/api/bundleCatalogue`,
         method: "GET",
       });
     } catch (error) {
@@ -77,10 +68,10 @@ export class API {
     }
   }
 
-  async updateBundleCatalogue({ authInstance, builderUrl, catalogueId }: updateBundleCatalogue) {
+  async updateBundleCatalogue({ authInstance, microappsAdminUrl, catalogueId }: updateBundleCatalogue) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/bundleCatalogue/import/${catalogueId}`,
+        url: `${microappsAdminUrl}/api/bundleCatalogue/import/${catalogueId}`,
         method: "POST",
       });
     } catch (error) {
@@ -90,13 +81,13 @@ export class API {
 
   async updateConnectorConfiguration({
     authInstance,
-    builderUrl,
+    microappsAdminUrl,
     integrationId,
     integrationConfiguration,
   }: updateintegrationConfiguration) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/service/${integrationId}`,
+        url: `${microappsAdminUrl}/api/service/${integrationId}`,
         method: "PUT",
         data: integrationConfiguration,
       });
@@ -105,17 +96,17 @@ export class API {
     }
   }
 
-  async getIntegration({ authInstance, builderUrl, integrationId }: GetIntegration) {
+  async getIntegration({ authInstance, microappsAdminUrl, integrationId }: GetIntegration) {
     return await authInstance({
-      url: `${builderUrl}/api/service/${integrationId}`,
+      url: `${microappsAdminUrl}/api/service/${integrationId}`,
       method: "GET",
     });
   }
 
-  async integrationLogout({ authInstance, builderUrl, integrationId }: IntegrationLogout) {
+  async integrationLogout({ authInstance, microappsAdminUrl, integrationId }: IntegrationLogout) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/auth/serviceAction/logout/${integrationId}`,
+        url: `${microappsAdminUrl}/api/auth/serviceAction/logout/${integrationId}`,
         method: "GET",
       });
     } catch (error) {
@@ -123,10 +114,10 @@ export class API {
     }
   }
 
-  async validateConfiguration({ authInstance, builderUrl, serviceKey, configuration }: validateConfiguration) {
+  async validateConfiguration({ authInstance, microappsAdminUrl, serviceKey, configuration }: validateConfiguration) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/external-services/${serviceKey}/validate-configuration`,
+        url: `${microappsAdminUrl}/api/external-services/${serviceKey}/validate-configuration`,
         method: "POST",
         data: {
           configurationParameters: configuration,
@@ -141,10 +132,10 @@ export class API {
     }
   }
 
-  async addApp({ authInstance, builderUrl, data }: addApp) {
+  async addApp({ authInstance, microappsAdminUrl, data }: addApp) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/app`,
+        url: `${microappsAdminUrl}/api/app`,
         method: "POST",
         data,
       });
@@ -153,10 +144,10 @@ export class API {
     }
   }
 
-  async getProcessStatus({ authInstance, builderUrl, processId }: getProcessStatus) {
+  async getProcessStatus({ authInstance, microappsAdminUrl, processId }: getProcessStatus) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/process/${processId}`,
+        url: `${microappsAdminUrl}/api/process/${processId}`,
         method: "GET",
       });
     } catch (error) {
@@ -164,10 +155,10 @@ export class API {
     }
   }
 
-  async getEntities({ authInstance, builderUrl, integrationId }: getEntities) {
+  async getEntities({ authInstance, microappsAdminUrl, integrationId }: getEntities) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/service/${integrationId}/entities`,
+        url: `${microappsAdminUrl}/api/service/${integrationId}/entities`,
         method: "GET",
       });
     } catch (error) {
@@ -175,10 +166,10 @@ export class API {
     }
   }
 
-  async createEntity({ authInstance, builderUrl, integrationId, entityData }: createEntity) {
+  async createEntity({ authInstance, microappsAdminUrl, integrationId, entityData }: createEntity) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/service/${integrationId}/entities`,
+        url: `${microappsAdminUrl}/api/service/${integrationId}/entities`,
         method: "PUT",
         data: entityData,
       });
@@ -187,10 +178,10 @@ export class API {
     }
   }
 
-  async finalizeConfig({ authInstance, builderUrl, integrationId }: finalizeConfig) {
+  async finalizeConfig({ authInstance, microappsAdminUrl, integrationId }: finalizeConfig) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/service/${integrationId}/finalize-config`,
+        url: `${microappsAdminUrl}/api/service/${integrationId}/finalize-config`,
         method: "POST",
       });
     } catch (error) {
@@ -198,10 +189,10 @@ export class API {
     }
   }
 
-  async getApps({ authInstance, builderUrl }: getApps) {
+  async getApps({ authInstance, microappsAdminUrl }: getApps) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/app`,
+        url: `${microappsAdminUrl}/api/app`,
         method: "GET",
       });
     } catch (error) {
@@ -209,10 +200,10 @@ export class API {
     }
   }
 
-  async getNotifications({ authInstance, builderUrl, appId }: getNotifications) {
+  async getNotifications({ authInstance, microappsAdminUrl, appId }: getNotifications) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/notifications/app/${appId}`,
+        url: `${microappsAdminUrl}/api/notifications/app/${appId}`,
         method: "GET",
       });
     } catch (error) {
@@ -220,20 +211,20 @@ export class API {
     }
   }
 
-  async runNotificationEvent({ authInstance, builderUrl, notificationId }: runNotificationEvent) {
+  async runNotificationEvent({ authInstance, microappsAdminUrl, notificationId }: runNotificationEvent) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/notification/${notificationId}/run`,
+        url: `${microappsAdminUrl}/api/notification/${notificationId}/run`,
         method: "POST",
       });
     } catch (error) {
       throw error.stack;
     }
   }
-  async startSynchronization({ authInstance, builderUrl, integrationId, synchronizationType }: StartSynchronization) {
+  async startSynchronization({ authInstance, microappsAdminUrl, integrationId, synchronizationType }: StartSynchronization) {
     try {
       return await authInstance({
-        url: `${builderUrl}/api/service/${integrationId}/run/${synchronizationType}`,
+        url: `${microappsAdminUrl}/api/service/${integrationId}/run/${synchronizationType}`,
         method: "POST",
       });
     } catch (error) {
