@@ -1,7 +1,7 @@
 # automation-template
 
 ## About this project
- share boilerplate code and directory sturcture acroos the projects
+ share boilerplate code and directory sturcture across the projects
 
 ## Folder Structure
 
