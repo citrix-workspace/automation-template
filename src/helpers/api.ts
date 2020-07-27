@@ -1,21 +1,21 @@
 import axios from 'axios';
 import { GetCitrixCloudTokens } from '../types/citrixCloud';
 import {
-    addApp,
-    getBundleCatalogue,
+    AddApp,
+    GetBundleCatalogue,
     GetIntegration,
     GetIntegrations,
-    getProcessStatus,
+    GetProcessStatus,
     IntegrationLogout,
-    updateBundleCatalogue,
-    updateintegrationConfiguration,
-    validateConfiguration,
-    getEntities,
-    createEntity,
-    finalizeConfig,
-    getApps,
-    getNotifications,
-    runNotificationEvent,
+    UpdateBundleCatalogue,
+    UpdateintegrationConfiguration,
+    ValidateConfiguration,
+    GetEntities,
+    CreateEntity,
+    FinalizeConfig,
+    GetApps,
+    GetNotifications,
+    RunNotificationEvent,
     StartSynchronization,
     IntegrityCheck,
 } from '../types/microappsAdmin';
@@ -63,7 +63,7 @@ export class API {
         }
     }
 
-    async getBundleCatalogue({ authInstance, microappsAdminUrl }: getBundleCatalogue) {
+    async getBundleCatalogue({ authInstance, microappsAdminUrl }: GetBundleCatalogue) {
         try {
             return await authInstance({
                 url: `${microappsAdminUrl}/api/bundleCatalogue`,
@@ -74,7 +74,7 @@ export class API {
         }
     }
 
-    async updateBundleCatalogue({ authInstance, microappsAdminUrl, catalogueId }: updateBundleCatalogue) {
+    async updateBundleCatalogue({ authInstance, microappsAdminUrl, catalogueId }: UpdateBundleCatalogue) {
         try {
             return await authInstance({
                 url: `${microappsAdminUrl}/api/bundleCatalogue/import/${catalogueId}`,
@@ -90,7 +90,7 @@ export class API {
         microappsAdminUrl,
         integrationId,
         integrationConfiguration,
-    }: updateintegrationConfiguration) {
+    }: UpdateintegrationConfiguration) {
         try {
             return await authInstance({
                 url: `${microappsAdminUrl}/api/service/${integrationId}`,
@@ -120,7 +120,7 @@ export class API {
         }
     }
 
-    async validateConfiguration({ authInstance, microappsAdminUrl, serviceKey, configuration }: validateConfiguration) {
+    async validateConfiguration({ authInstance, microappsAdminUrl, serviceKey, configuration }: ValidateConfiguration) {
         try {
             return await authInstance({
                 url: `${microappsAdminUrl}/api/external-services/${serviceKey}/validate-configuration`,
@@ -138,7 +138,7 @@ export class API {
         }
     }
 
-    async addApp({ authInstance, microappsAdminUrl, data }: addApp) {
+    async addApp({ authInstance, microappsAdminUrl, data }: AddApp) {
         try {
             return await authInstance({
                 url: `${microappsAdminUrl}/api/app`,
@@ -150,7 +150,7 @@ export class API {
         }
     }
 
-    async getProcessStatus({ authInstance, microappsAdminUrl, processId }: getProcessStatus) {
+    async getProcessStatus({ authInstance, microappsAdminUrl, processId }: GetProcessStatus) {
         try {
             return await authInstance({
                 url: `${microappsAdminUrl}/api/process/${processId}`,
@@ -161,7 +161,7 @@ export class API {
         }
     }
 
-    async getEntities({ authInstance, microappsAdminUrl, integrationId }: getEntities) {
+    async getEntities({ authInstance, microappsAdminUrl, integrationId }: GetEntities) {
         try {
             return await authInstance({
                 url: `${microappsAdminUrl}/api/service/${integrationId}/entities`,
@@ -172,7 +172,7 @@ export class API {
         }
     }
 
-    async createEntity({ authInstance, microappsAdminUrl, integrationId, entityData }: createEntity) {
+    async createEntity({ authInstance, microappsAdminUrl, integrationId, entityData }: CreateEntity) {
         try {
             return await authInstance({
                 url: `${microappsAdminUrl}/api/service/${integrationId}/entities`,
@@ -184,7 +184,7 @@ export class API {
         }
     }
 
-    async finalizeConfig({ authInstance, microappsAdminUrl, integrationId }: finalizeConfig) {
+    async finalizeConfig({ authInstance, microappsAdminUrl, integrationId }: FinalizeConfig) {
         try {
             return await authInstance({
                 url: `${microappsAdminUrl}/api/service/${integrationId}/finalize-config`,
@@ -195,7 +195,7 @@ export class API {
         }
     }
 
-    async getApps({ authInstance, microappsAdminUrl }: getApps) {
+    async getApps({ authInstance, microappsAdminUrl }: GetApps) {
         try {
             return await authInstance({
                 url: `${microappsAdminUrl}/api/app`,
@@ -206,7 +206,7 @@ export class API {
         }
     }
 
-    async getNotifications({ authInstance, microappsAdminUrl, appId }: getNotifications) {
+    async getNotifications({ authInstance, microappsAdminUrl, appId }: GetNotifications) {
         try {
             return await authInstance({
                 url: `${microappsAdminUrl}/api/notifications/app/${appId}`,
@@ -217,7 +217,7 @@ export class API {
         }
     }
 
-    async runNotificationEvent({ authInstance, microappsAdminUrl, notificationId }: runNotificationEvent) {
+    async runNotificationEvent({ authInstance, microappsAdminUrl, notificationId }: RunNotificationEvent) {
         try {
             return await authInstance({
                 url: `${microappsAdminUrl}/api/notification/${notificationId}/run`,

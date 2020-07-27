@@ -58,39 +58,39 @@ export type RunSynchronization = {
   synchronizationType: string;
 };
 
-export type getBundleCatalogue = {
+export type GetBundleCatalogue = {
   authInstance: any;
   microappsAdminUrl: string;
 };
 
-export type updateBundleCatalogue = {
+export type UpdateBundleCatalogue = {
   authInstance: any;
   microappsAdminUrl: string;
   catalogueId: string;
 };
 
-export type updateintegrationConfiguration = {
+export type UpdateintegrationConfiguration = {
   authInstance: any;
   microappsAdminUrl: string;
   integrationId: string;
   integrationConfiguration: any;
 };
 
-export type createHTTPIntegration = {
+export type CreateHTTPIntegration = {
   authInstance: any;
   microappsAdminUrl: string;
   integrationName: string;
   integrationConfiguration: any;
 };
 
-export type validateConfiguration = {
+export type ValidateConfiguration = {
   authInstance: any;
   microappsAdminUrl: string;
   serviceKey: string;
   configuration: string;
 };
 
-export type waitForProcessStatus = {
+export type WaitForProcessStatus = {
   authInstance: any;
   getProcessStatus: () => any;
   status: string;
@@ -98,13 +98,13 @@ export type waitForProcessStatus = {
   processId: string;
 };
 
-export type addApp = {
+export type AddApp = {
   authInstance: any;
   microappsAdminUrl: string;
   data: string;
 };
 
-export type createJavaIntegration = {
+export type CreateJavaIntegration = {
   authInstance: any;
   microappsAdminUrl: string;
   data: string;
@@ -115,50 +115,50 @@ export type createJavaIntegration = {
   name: string;
 };
 
-export type getProcessStatus = {
+export type GetProcessStatus = {
   authInstance: any;
   microappsAdminUrl: string;
   processId: string;
 };
 
-export type getEntities = {
+export type GetEntities = {
   authInstance: any;
   microappsAdminUrl: string;
   integrationId: string;
 };
 
-export type createEntity = {
+export type CreateEntity = {
   authInstance: any;
   microappsAdminUrl: string;
   integrationId: string;
   entityData: any;
 };
 
-export type finalizeConfig = {
+export type FinalizeConfig = {
   authInstance: any;
   microappsAdminUrl: string;
   integrationId: string;
 };
 
-export type getIntegrationType = {
+export type GetIntegrationType = {
   authInstance: any;
   microappsAdminUrl: string;
   integrationName: string;
 };
 
-export type getStatusIntegration = {
+export type GetStatusIntegration = {
   authInstance: any;
   microappsAdminUrl: string;
   integrationName: string;
 };
 
-export type importIntegration = {
+export type ImportIntegration = {
   authInstance: any;
   microappsAdminUrl: string;
   pathToFile: string;
 };
 
-export type renameIntegration = {
+export type RenameIntegration = {
   authInstance: any;
   microappsAdminUrl: string;
   integrationName: string;
@@ -166,46 +166,45 @@ export type renameIntegration = {
   integrationConfiguration: string;
 };
 
-export type exportApp = {
+export type ExportApp = {
   authInstance: any;
   microappsAdminUrl: string;
   appId: string;
   pathToFile: string;
 };
 
-export type getApps = {
+export type GetApps = {
   authInstance: any;
   microappsAdminUrl: string;
 };
 
-
-export type getMicroAppId = {
+export type GetMicroAppId = {
   authInstance: any;
   microappsAdminUrl: string;
   integrationId: string;
   appName: string;
 };
 
-export type getNotifications = {
+export type GetNotifications = {
   authInstance: any;
   microappsAdminUrl: string;
   appId: string;
 };
 
-export type getNotificationId = {
+export type GetNotificationId = {
   authInstance: any;
   microappsAdminUrl: string;
   appId: string;
   notificationName: string;
 };
 
-export type runNotificationEvent = {
+export type RunNotificationEvent = {
   authInstance: any;
   microappsAdminUrl: string;
   notificationId: string;
 };
 
-export type runEvent = {
+export type RunEvent = {
   authInstance: any;
   microappsAdminUrl: string;
   integrationName: string;
