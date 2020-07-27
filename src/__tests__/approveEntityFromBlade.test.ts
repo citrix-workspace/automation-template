@@ -20,7 +20,7 @@ const citrixCloud = new CitrixCloud();
 const microappsAdmin = new MicroappsAdmin();
 const workspace = new Workspace();
 
-const FIXTURE_NAME = '_Approve Entity from feed card_';
+const FIXTURE_NAME = '_Approve Entity from blade_';
 const integrationName = 'integrationName';
 const appName = 'appName';
 const notificationName = 'notificationName';
@@ -97,14 +97,15 @@ describe(FIXTURE_NAME, () => {
             });
         });
 
-        await step(context)('Approve Entity from Feed Card', async () => {
+        await step(context)('Click on Feed Card and open Blade', async () => {
+            const feedCardId = '5f1e5a20661f2c4230f6049e'
             await page.waitForSelector(`#feed-card-body-${feedCardId}`);
-            const button = await workspace.getFeedCardButton({
-                page,
-                feedCardId,
-                buttonName: 'Approve',
-            });
-            await button[0].click();
+            await page.click(`#feed-card-body-${feedCardId}`);
+        });
+
+        await step(context)('Approve Entity from Blade', async () => {
+            await page.waitForSelector('footer button:not([disabled])');
+            await page.click('footer button >> text=Approve');
         });
 
         await step(context)('OAuth login to SoR', async () => {

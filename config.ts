@@ -1,6 +1,6 @@
 export const config = {
     headless: false,
-    screenshotOnEachStep: true,
+    screenshotOnEachStep: false,
     stepScreenshots: true,
     devtools: false,
     workspaceIdentityProvider: process.env.CONFIG_IDP ? `${process.env.CONFIG_IDP}` : 'ad',
