@@ -23,7 +23,9 @@ automation-template/
   tsconfig.json
   src/
     __tests__/
-    startAction.test.ts
+    approveEntityFromBlade.test.ts
+    approveEntityFromFeedCard.test.ts
+    createEntity.test.ts
     helpers/
     api.ts
     citrixCloud.ts
@@ -45,7 +47,7 @@ yarn
 ### Running All Tests locally
 
 ```bash
-yarn start test
+yarn test
 ```
 
 ### Running Single Test locally
