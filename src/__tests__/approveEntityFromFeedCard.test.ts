@@ -20,7 +20,7 @@ const citrixCloud = new CitrixCloud();
 const microappsAdmin = new MicroappsAdmin();
 const workspace = new Workspace();
 
-const FIXTURE_NAME = '_Approve Entity from feed card HC_';
+const FIXTURE_NAME = '_Approve Entity from feed card_';
 const integrationName = 'integrationName';
 const appName = 'appName';
 const notificationName = 'notificationName';
@@ -80,9 +80,6 @@ describe(FIXTURE_NAME, () => {
         });
 
         await step(context)('Login to Workspace', async () => {
-            console.log(workspaceUsername)
-            console.log(workspacePassword)
-            console.log(workspaceIdentityProvider) 
             await workspace.login({
                 page,
                 workspaceUrl,
