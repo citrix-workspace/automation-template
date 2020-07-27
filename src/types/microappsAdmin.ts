@@ -212,3 +212,17 @@ export type runEvent = {
   appName: string;
   notificationName: string;
 };
+
+export type CheckAppMissconfigurations = {
+  authInstance: any;
+  microappsAdminUrl: string;
+  appId: string;
+};
+
+export type IntegrityCheck = {
+  authInstance: any;
+  microappsAdminUrl: string;
+};
+
+
+

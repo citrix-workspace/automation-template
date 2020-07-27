@@ -103,6 +103,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_src_helpers_microappsadmin_.microappsadmin.html#addapp" class="tsd-kind-icon">add<wbr>App</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_helpers_microappsadmin_.microappsadmin.html#checkappmissconfigurations" class="tsd-kind-icon">check<wbr>App<wbr>Missconfigurations</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_src_helpers_microappsadmin_.microappsadmin.html#createentity" class="tsd-kind-icon">create<wbr>Entity</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_helpers_microappsadmin_.microappsadmin.html#createhttpintegration" class="tsd-kind-icon">createHTTPIntegration</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_helpers_microappsadmin_.microappsadmin.html#createjavaintegration" class="tsd-kind-icon">create<wbr>Java<wbr>Integration</a></li>
@@ -123,6 +124,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_helpers_microappsadmin_.microappsadmin.html#getstatusintegration" class="tsd-kind-icon">get<wbr>Status<wbr>Integration</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_helpers_microappsadmin_.microappsadmin.html#importintegration" class="tsd-kind-icon">import<wbr>Integration</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_src_helpers_microappsadmin_.microappsadmin.html#integrationlogout" class="tsd-kind-icon">integration<wbr>Logout</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_src_helpers_microappsadmin_.microappsadmin.html#integritycheck" class="tsd-kind-icon">integrity<wbr>Check</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_helpers_microappsadmin_.microappsadmin.html#login" class="tsd-kind-icon">login</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_helpers_microappsadmin_.microappsadmin.html#oauthlogout" class="tsd-kind-icon">oauth<wbr>Logout</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_helpers_microappsadmin_.microappsadmin.html#renameintegration" class="tsd-kind-icon">rename<wbr>Integration</a></li>
@@ -153,7 +155,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L29">src/helpers/microappsAdmin.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L30">src/helpers/microappsAdmin.ts:30</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_src_helpers_microappsadmin_.microappsadmin.html" class="tsd-signature-type">MicroappsAdmin</a></h4>
@@ -174,7 +176,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#addapp">addApp</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L135">src/helpers/api.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L141">src/helpers/api.ts:141</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -198,6 +200,40 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="checkappmissconfigurations" class="tsd-anchor"></a>
+					<h3>check<wbr>App<wbr>Missconfigurations</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">check<wbr>App<wbr>Missconfigurations<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>appId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>authInstance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>microappsAdminUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L584">src/helpers/microappsAdmin.ts:584</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>__namedParameters: <span class="tsd-signature-symbol">{ </span>appId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>authInstance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>microappsAdminUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>app<wbr>Id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>auth<wbr>Instance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>microapps<wbr>Admin<wbr>Url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="createentity" class="tsd-anchor"></a>
 					<h3>create<wbr>Entity</h3>
@@ -209,7 +245,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#createentity">createEntity</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L169">src/helpers/api.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L175">src/helpers/api.ts:175</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -246,7 +282,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L199">src/helpers/microappsAdmin.ts:199</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L205">src/helpers/microappsAdmin.ts:205</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -300,7 +336,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L257">src/helpers/microappsAdmin.ts:257</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L263">src/helpers/microappsAdmin.ts:263</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -360,7 +396,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L468">src/helpers/microappsAdmin.ts:468</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L478">src/helpers/microappsAdmin.ts:478</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -415,7 +451,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#finalizeconfig">finalizeConfig</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L181">src/helpers/api.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L187">src/helpers/api.ts:187</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -450,7 +486,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#getapps">getApps</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L192">src/helpers/api.ts:192</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L198">src/helpers/api.ts:198</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -482,7 +518,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#getbundlecatalogue">getBundleCatalogue</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L60">src/helpers/api.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L66">src/helpers/api.ts:66</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -514,7 +550,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#getcitrixcloudtokens">getCitrixCloudTokens</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L33">src/helpers/api.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L34">src/helpers/api.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -569,7 +605,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#getentities">getEntities</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L158">src/helpers/api.ts:158</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L164">src/helpers/api.ts:164</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -604,7 +640,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#getintegration">getIntegration</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L99">src/helpers/api.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L105">src/helpers/api.ts:105</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -638,7 +674,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L78">src/helpers/microappsAdmin.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L79">src/helpers/microappsAdmin.ts:79</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -686,7 +722,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L361">src/helpers/microappsAdmin.ts:361</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L367">src/helpers/microappsAdmin.ts:367</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -735,7 +771,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#getintegrations">getIntegrations</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L49">src/helpers/api.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L55">src/helpers/api.ts:55</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -766,7 +802,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L490">src/helpers/microappsAdmin.ts:490</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L500">src/helpers/microappsAdmin.ts:500</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -820,7 +856,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L515">src/helpers/microappsAdmin.ts:515</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L525">src/helpers/microappsAdmin.ts:525</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -875,7 +911,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#getnotifications">getNotifications</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L203">src/helpers/api.ts:203</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L209">src/helpers/api.ts:209</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -910,7 +946,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#getprocessstatus">getProcessStatus</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L147">src/helpers/api.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L153">src/helpers/api.ts:153</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -944,7 +980,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L381">src/helpers/microappsAdmin.ts:381</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L387">src/helpers/microappsAdmin.ts:387</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -992,7 +1028,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L397">src/helpers/microappsAdmin.ts:397</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L403">src/helpers/microappsAdmin.ts:403</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1041,7 +1077,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#integrationlogout">integrationLogout</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L106">src/helpers/api.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L112">src/helpers/api.ts:112</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1065,6 +1101,38 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="integritycheck" class="tsd-anchor"></a>
+					<h3>integrity<wbr>Check</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">integrity<wbr>Check<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>authInstance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>microappsAdminUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#integritycheck">integrityCheck</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L246">src/helpers/api.ts:246</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>__namedParameters: <span class="tsd-signature-symbol">{ </span>authInstance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>microappsAdminUrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>auth<wbr>Instance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>microapps<wbr>Admin<wbr>Url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="login" class="tsd-anchor"></a>
 					<h3>login</h3>
@@ -1075,7 +1143,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L41">src/helpers/microappsAdmin.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L42">src/helpers/microappsAdmin.ts:42</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1123,7 +1191,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L92">src/helpers/microappsAdmin.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L93">src/helpers/microappsAdmin.ts:93</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1177,7 +1245,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L428">src/helpers/microappsAdmin.ts:428</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L438">src/helpers/microappsAdmin.ts:438</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1237,7 +1305,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L542">src/helpers/microappsAdmin.ts:542</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L552">src/helpers/microappsAdmin.ts:552</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1298,7 +1366,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#runnotificationevent">runNotificationEvent</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L214">src/helpers/api.ts:214</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L220">src/helpers/api.ts:220</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1332,7 +1400,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L144">src/helpers/microappsAdmin.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L145">src/helpers/microappsAdmin.ts:145</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1387,7 +1455,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#startsynchronization">startSynchronization</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L224">src/helpers/api.ts:224</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L230">src/helpers/api.ts:230</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1425,7 +1493,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#updatebundlecatalogue">updateBundleCatalogue</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L71">src/helpers/api.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L77">src/helpers/api.ts:77</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1460,7 +1528,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#updateconnectorconfiguration">updateConnectorConfiguration</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L82">src/helpers/api.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L88">src/helpers/api.ts:88</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1498,7 +1566,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_helpers_api_.api.html">API</a>.<a href="_src_helpers_api_.api.html#validateconfiguration">validateConfiguration</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/api.ts#L117">src/helpers/api.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/api.ts#L123">src/helpers/api.ts:123</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1535,7 +1603,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L230">src/helpers/microappsAdmin.ts:230</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L236">src/helpers/microappsAdmin.ts:236</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1589,7 +1657,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/b3f5def/src/helpers/microappsAdmin.ts#L105">src/helpers/microappsAdmin.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/citrix-workspace/automation-template/blob/06e2c10/src/helpers/microappsAdmin.ts#L106">src/helpers/microappsAdmin.ts:106</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1692,6 +1760,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_src_helpers_microappsadmin_.microappsadmin.html#addapp" class="tsd-kind-icon">add<wbr>App</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_src_helpers_microappsadmin_.microappsadmin.html#checkappmissconfigurations" class="tsd-kind-icon">check<wbr>App<wbr>Missconfigurations</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_src_helpers_microappsadmin_.microappsadmin.html#createentity" class="tsd-kind-icon">create<wbr>Entity</a>
 							</li>
@@ -1751,6 +1822,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_src_helpers_microappsadmin_.microappsadmin.html#integrationlogout" class="tsd-kind-icon">integration<wbr>Logout</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_src_helpers_microappsadmin_.microappsadmin.html#integritycheck" class="tsd-kind-icon">integrity<wbr>Check</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_src_helpers_microappsadmin_.microappsadmin.html#login" class="tsd-kind-icon">login</a>
