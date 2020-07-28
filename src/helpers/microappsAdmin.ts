@@ -215,7 +215,7 @@ export class MicroappsAdmin extends API {
         const createdConnector = await this.updateBundleCatalogue({ authInstance, microappsAdminUrl, catalogueId });
         const integrationId = createdConnector.data.id;
 
-        await this.updateConnectorConfiguration({
+        await this.updateintegrationConfiguration({
             authInstance,
             microappsAdminUrl,
             integrationId,
@@ -449,7 +449,7 @@ export class MicroappsAdmin extends API {
         };
         const integrationId = await this.getStatusIntegration({ authInstance, microappsAdminUrl, integrationName });
 
-        await this.updateConnectorConfiguration({
+        await this.updateintegrationConfiguration({
             authInstance,
             microappsAdminUrl,
             integrationId,
