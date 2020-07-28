@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { GetCitrixCloudTokens } from '../types/citrixCloud';
 import {
     AddApp,
@@ -51,6 +51,11 @@ export class API {
             throw error.stack;
         }
     }
+    /**
+     * Get all Integrations in Miroapps Admin
+     * @param {object} authInstance - Axios instance
+     * @param {string} microappsAdminUrl - Microapps Admin Url
+     */
 
     async getIntegrations({ authInstance, microappsAdminUrl }: GetIntegrations) {
         try {
@@ -63,6 +68,12 @@ export class API {
         }
     }
 
+    /**
+     * Get Bundle Catalogue in Miroapps Admin
+     * @param {object} authInstance - Axios instance
+     * @param {string} microappsAdminUrl - Microapps Admin Url
+     */
+
     async getBundleCatalogue({ authInstance, microappsAdminUrl }: GetBundleCatalogue) {
         try {
             return await authInstance({
@@ -74,6 +85,12 @@ export class API {
         }
     }
 
+    /**
+     * Update Bundle Catalogue in Miroapps Admin
+     * @param {object} authInstance - Axios instance
+     * @param {string} microappsAdminUrl - Microapps Admin Url
+     * @param {string} catalogueId - Catalogue Id
+     */
     async updateBundleCatalogue({ authInstance, microappsAdminUrl, catalogueId }: UpdateBundleCatalogue) {
         try {
             return await authInstance({
@@ -85,7 +102,14 @@ export class API {
         }
     }
 
-    async updateConnectorConfiguration({
+    /**
+     * Update Integration Configuration in Miroapps Admin
+     * @param {object} authInstance - Axios instance
+     * @param {string} microappsAdminUrl - Microapps Admin Url
+     * @param {string} integrationId - Integration Id
+     * @param {string} integrationConfiguration - integrationConfiguration
+     */
+    async updateintegrationConfiguration({
         authInstance,
         microappsAdminUrl,
         integrationId,
