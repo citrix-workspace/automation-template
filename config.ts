@@ -15,4 +15,5 @@ export const config = {
     citrixCloudClientSecret: process.env.CONFIG_CLIENT_SECRET ? `${process.env.CONFIG_CLIENT_SECRET}` : '',
     microappsAdminUrl: `https://${process.env.CONFIG_BUILDER_URL}/admin`,
     loggerFilter: `.${process.env.CONFIG_BUILDER_URL}(.*)initiator_type=BUTTON`,
+    defaultTimeout: 90000,
 };

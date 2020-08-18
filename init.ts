@@ -20,7 +20,7 @@ type It = {
     page: Page;
 };
 
-const { screenshotOnEachStep, devtools, headless } = config;
+const { screenshotOnEachStep, devtools, headless, defaultTimeout } = config;
 
 const ts = () => timestamp('HH:mm:ss');
 
@@ -45,6 +45,7 @@ export const it = function (testName: string, func: ({ page, context, browser }:
         const context: CustomContext = await browser.newContext({ viewport: null });
         const page = await context.newPage();
         context.testName = testName;
+        page.setDefaultTimeout(defaultTimeout);
 
         page.on('pageerror', (err: any) => {
             console.log(ts(), 'pageerror: ', err);
