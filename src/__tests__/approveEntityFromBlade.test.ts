@@ -34,7 +34,7 @@ let notificationId: string;
 let feedCardId: string;
 let recordId: string;
 
-describe(FIXTURE_NAME, () => {
+describe.skip(FIXTURE_NAME, () => {
     it(FIXTURE_NAME, async ({ context, page }) => {
         await step(context)('Create Entity Record in SoR', async () => {
             // Create record in SoR using API and return Record Id
