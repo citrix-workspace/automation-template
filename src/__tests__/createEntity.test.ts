@@ -10,7 +10,7 @@ const actionName = 'Create Entity';
 
 let recordId: string;
 
-describe(FIXTURE_NAME, () => {
+describe.skip(FIXTURE_NAME, () => {
     it(FIXTURE_NAME, async ({ context, page }) => {
         await step(context)('Login to Workspace', async () => {
             await workspace.login({

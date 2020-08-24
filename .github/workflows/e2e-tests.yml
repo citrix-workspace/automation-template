@@ -1,0 +1,46 @@
+name: e2e_test
+
+on: 
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'  
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      
+      - name: Check out code 
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - uses: microsoft/playwright-github-action@v1
+            
+      - name: Install dependencies
+        run: npm ci 
+      
+      - name: Run tests
+        run: npm run test
+      
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-artifacts
+          path: artifacts/
+      

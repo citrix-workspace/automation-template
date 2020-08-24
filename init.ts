@@ -1,24 +1,8 @@
-import playwright, { Page, Browser, BrowserContext, BrowserType } from 'playwright';
+import playwright, { Browser, BrowserContext, BrowserType } from 'playwright';
 import timestamp from 'time-stamp';
 import path from 'path';
 import { config } from './config';
-
-interface CustomContext extends BrowserContext {
-    testName?: string;
-}
-
-type CreateScreenshots = {
-    context: CustomContext;
-    testName?: string;
-    stepName: string;
-    capture: boolean;
-};
-
-type It = {
-    browser?: Browser;
-    context: BrowserContext;
-    page: Page;
-};
+import { It, CustomContext, CreateScreenshots } from './src/types/init';
 
 const { screenshotOnEachStep, devtools, headless, defaultTimeout } = config;
 
@@ -36,7 +20,7 @@ const logTestDuration = async function (startTime: Date) {
 };
 
 export const initBrowserPlaywright = async () => {
-    return await browserType.launch({ headless, devtools, timeout: 600000 });
+    return await browserType.launch({ headless, devtools, timeout: 600000, args: ["--no-sandbox"] });
 };
 
 export const it = function (testName: string, func: ({ page, context, browser }: It) => any) {
@@ -126,13 +110,12 @@ export const step = (context: BrowserContext) => async (stepName: string, func: 
     }
 };
 
-
 export const run = async (runName: string, func: () => any) => {
     try {
         await func();
-        console.info(ts(),`✅ ${runName}`);
+        console.info(ts(), `✅ ${runName}`);
     } catch (e) {
-        console.info(ts(),`❌ ${runName}`);
+        console.info(ts(), `❌ ${runName}`);
         throw e;
     }
 };

@@ -1,5 +1,5 @@
 export const config = {
-    headless: false,
+    headless: true,
     screenshotOnEachStep: false,
     stepScreenshots: true,
     devtools: false,
