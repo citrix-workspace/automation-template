@@ -223,5 +223,16 @@ export type IntegrityCheck = {
   microappsAdminUrl: string;
 };
 
+export type ImportIntegrationUI = {
+  page: Page;
+  microappsAdminUrl: string;
+  filePath: string;
+}
 
+export type ImportMicroAppUI = {
+  page: Page;
+  microappsAdminUrl: string;
+  filePath: string;
+  integrationName: string;
+}
 

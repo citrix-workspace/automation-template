@@ -13,6 +13,8 @@ import {
     GetNotificationId,
     GetStatusIntegration,
     ImportIntegration,
+    ImportIntegrationUI,
+    ImportMicroAppUI,
     Login,
     OauthLogout,
     RenameIntegration,
@@ -583,7 +585,7 @@ export class MicroappsAdmin extends API {
 
     async checkAppMissconfigurations({ authInstance, microappsAdminUrl, appId }: CheckAppMissconfigurations) {
         const response = await this.integrityCheck({ authInstance, microappsAdminUrl });
-        const responseBody = response.data
+        const responseBody = response.data;
         const missconfigurations: any = responseBody.filter((e: { appId: string }) => e.appId === appId);
 
         if (!Array.isArray(missconfigurations) || !missconfigurations.length) {
@@ -591,5 +593,64 @@ export class MicroappsAdmin extends API {
         }
 
         console.log('missconfigurations: ', missconfigurations);
+    }
+
+    /**
+     * Import Integration from an exported Integration file
+     *
+     * @param {Page} page - Methods to interact with a single tab or extension background page in Browser
+     * @param {string} filePath - Path to the exported Integration file that will be imported
+     */
+    async importIntegrationUI({ page, microappsAdminUrl, filePath }: ImportIntegrationUI) {
+        await page.waitForSelector('[data-testid="add-integration-button"]');
+        await page.click('[data-testid="add-integration-button"]');
+
+        await page.waitForSelector('[data-testid="new-integration-upload"]');
+        await page.click('[data-testid="new-integration-upload"]');
+
+        const uploadFile: any = await page.$('input[type=file]');
+        await uploadFile.setInputFiles(path.resolve(__dirname, filePath));
+
+        await page.waitForSelector('[data-testid="upload-submit-button"]');
+        await page.click('[data-testid="upload-submit-button"]');
+
+        await page.waitForResponse(
+            (response: { url: () => string; status: () => number }) =>
+                response.url() === `${microappsAdminUrl}/api/service/import` && response.status() === 200
+        );
+    }
+
+    /**
+     * Imports MicroApp to @param integrationName Integration from an exported MicroApp file
+     *
+     * @param {Page} page -  Methods to interact with a single tab or extension background page in Browser
+     * @param {string} microappsAdminUrl - MicroApps Admin URL
+     * @param {string} filePath - Path to the exported MicroApp file that will be imported
+     * @param {string} integrationName - Name of Integration in which the MicroApp will be imported
+     */
+    async importMicroAppUI({ page, microappsAdminUrl, filePath, integrationName }: ImportMicroAppUI) {
+        await page.waitForSelector(
+            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
+        );
+        await page.click(
+            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
+        );
+
+        await page.waitForSelector(
+            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-import-app"]`
+        );
+        await page.click(
+            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-import-app"]`
+        );
+
+        const uploadFile: any = await page.$('input[type=file]');
+        await uploadFile.setInputFiles(path.resolve(__dirname, filePath));
+        await page.waitForSelector('[data-testid="upload-submit-button"]');
+        await page.click('[data-testid="upload-submit-button"]');
+
+        await page.waitForResponse(
+            (response: { url: () => string; status: () => number }) =>
+                response.url() === `${microappsAdminUrl}/api/app` && response.status() === 200
+        );
     }
 }
