@@ -18,6 +18,11 @@ import {
     RunNotificationEvent,
     StartSynchronization,
     IntegrityCheck,
+    DeleteIntegration,
+    GetDomain,
+    GetQuery,
+    UpdateSubscribers,
+    GetSubscribers,
 } from '../types/microappsAdmin';
 
 /** Class representing a Citrix Cloud. */
@@ -43,8 +48,8 @@ export class API {
                 url: `https://trust.${cwaAPI}.net/${citrixCloudCustomerId}/tokens/clients`,
                 method: 'POST',
                 data: {
-                    citrixCloudClientId,
-                    citrixCloudClientSecret,
+                    clientId: citrixCloudClientId,
+                    clientSecret: citrixCloudClientSecret,
                 },
             });
         } catch (error) {
@@ -271,6 +276,157 @@ export class API {
         try {
             return await authInstance({
                 url: `${microappsAdminUrl}/api/app/integrity-check`,
+                method: 'GET',
+            });
+        } catch (error) {
+            throw error.stack;
+        }
+    }
+    async deleteIntegration({ authInstance, microappsAdminUrl, integrationId }: DeleteIntegration) {
+        try {
+            return await authInstance({
+                url: `${microappsAdminUrl}/api/service/${integrationId}`,
+                method: 'DELETE',
+            });
+        } catch (error) {
+            throw error.stack;
+        }
+    }
+
+    async getDomain({ authInstance, cwaAPI, citrixCloudCustomerId, workspaceIdentityProvider }: GetDomain) {
+        try {
+            switch (workspaceIdentityProvider) {
+                case 'ad':
+                    return await authInstance({
+                        url: `https://cws.${cwaAPI}.net/${citrixCloudCustomerId}/domainconfigurations`,
+                        method: 'GET',
+                        params: {
+                            Provider: workspaceIdentityProvider.toUpperCase(),
+                        },
+                    });
+                case 'netscaler':
+                    return await authInstance({
+                        url: `https://cws.${cwaAPI}.net/${citrixCloudCustomerId}/domainconfigurations`,
+                        method: 'GET',
+                        params: {
+                            Provider: 'AD',
+                        },
+                    });
+                case 'aad':
+                    return await authInstance({
+                        url: `https://cws.${cwaAPI}.net/${citrixCloudCustomerId}/AuthDomains`,
+                        method: 'GET',
+                    });
+                case 'okta':
+                    break;
+                default:
+                    console.log(`getDomain is currently not implemented for this idp: ${workspaceIdentityProvider}`);
+                    break;
+            }
+        } catch (error) {
+            throw error.stack;
+        }
+    }
+
+    async getQuery({ authInstance, cwaAPI, domainName, forestName, appId, query, citrixCloudCustomerId, idpType }: GetQuery) {
+        try {
+            return await authInstance({
+                url: `https://cws.${cwaAPI}.net/${citrixCloudCustomerId}/users/query`,
+                method: 'POST',
+                data: {
+                    adminUser: '',
+                    domain: domainName,
+                    forest: forestName,
+                    idpType: idpType,
+                    key: '',
+                    offerings: [
+                        {
+                            compatibleIdentities: [
+                                {
+                                    compatibleIdentity: 'OID:/*',
+                                    reasons: [],
+                                },
+                            ],
+                            offeringId: appId,
+                        },
+                    ],
+                    query: query,
+                    supportsAzureAdGroups: idpType === 'AZUREAD',
+                },
+            });
+        } catch (error) {
+            throw error.stack;
+        }
+    }
+
+    async updateSubscribers({
+        authInstance,
+        microappsAdminUrl,
+        assign,
+        userDetail,
+        appId,
+        domainName,
+        forestName,
+        workspaceIdentityProvider,
+    }: UpdateSubscribers) {
+        const { accountName, displayName, universalClaims, identityInformation, isGroup } = userDetail[0];
+
+        const getOID = universalClaims.filter((value: string) => {
+            return value.startsWith('OID');
+        });
+
+        const oid = getOID[0];
+
+        let ipForUpdate;
+        switch (workspaceIdentityProvider) {
+            case 'ad':
+            case 'netscaler':
+                ipForUpdate = 'AD';
+                break;
+            case 'aad':
+                ipForUpdate = 'AzureAD';
+                break;
+            case 'okta':
+                ipForUpdate = 'Okta';
+                break;
+            default:
+                ipForUpdate = null;
+                console.log(`Adding subscribers is currently not implemented for this idp`);
+                break;
+        }
+
+        try {
+            return await authInstance({
+                url: `${microappsAdminUrl}/api/security/app-user/selected-groups/${appId}`,
+                method: 'PUT',
+                data: [
+                    {
+                        oid: oid,
+                        accountName: accountName,
+                        displayName: displayName,
+                        directoryContext: {
+                            domain: domainName,
+                            forest: forestName,
+                            identityProvider: ipForUpdate,
+                        },
+                        email: identityInformation.email,
+                        isGroup: isGroup,
+                        domain: domainName,
+                        userPrincipalName: identityInformation.email,
+                        universalClaims: universalClaims,
+                        assign: assign === 'Add' ? true : false,
+                    },
+                ],
+            });
+        } catch (error) {
+            throw error.stack;
+        }
+    }
+
+    async getSubscribers({ authInstance, microappsAdminUrl, appId }: GetSubscribers) {
+        try {
+            return await authInstance({
+                url: `${microappsAdminUrl}/api/security/app-user/selected-groups/${appId}`,
                 method: 'GET',
             });
         } catch (error) {
