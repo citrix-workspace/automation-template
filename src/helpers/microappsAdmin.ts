@@ -1,9 +1,13 @@
+import { config } from '../../config';
 import FormData from 'form-data';
 import fs from 'fs';
 import path from 'path';
 import assert from 'assert';
 import { CitrixCloud } from './citrixCloud';
 import {
+    AddSubscriber,
+    AddSubscribers,
+    CheckAppMissconfigurations,
     CreateHTTPIntegration,
     CreateJavaIntegration,
     ExportApp,
@@ -20,9 +24,9 @@ import {
     RenameIntegration,
     RunEvent,
     RunSynchronization,
+    Subscribe,
     WaitForProcessStatus,
     WaitForSync,
-    CheckAppMissconfigurations,
 } from '../types/microappsAdmin';
 import { API } from './api';
 
@@ -164,7 +168,7 @@ export class MicroappsAdmin extends API {
             return job.synchronizationTypeId === synchronizationType;
         });
 
-        if (getJobRunDetail.length === 0) {
+        if (getJobRunDetail === undefined) {
             await this.startSynchronization({
                 authInstance,
                 microappsAdminUrl,
@@ -426,6 +430,7 @@ export class MicroappsAdmin extends API {
             200,
             `Response status ${response.status} doesn't match expected 200`
         );
+        return response;
     }
 
     /**
@@ -595,6 +600,117 @@ export class MicroappsAdmin extends API {
         console.log('missconfigurations: ', missconfigurations);
     }
 
+    async addSubscriber({ authInstance, appId, user }: AddSubscriber) {
+        const { microappsAdminUrl, citrixCloudCustomerId, cwaAPI, workspaceIdentityProvider } = config;
+        // Get Domains
+        const domains = await this.getDomain({
+            authInstance,
+            cwaAPI,
+            citrixCloudCustomerId,
+            workspaceIdentityProvider,
+        });
+
+        const actionSubscribe = 'Add';
+        let domainName;
+        let forestName;
+        let idpType;
+
+        switch (workspaceIdentityProvider) {
+            case 'ad':
+            case 'netscaler':
+                domainName = domains.data.domains[0].domainName;
+                forestName = domains.data.domains[0].forestName;
+                idpType = 'AD';
+                break;
+            case 'aad':
+                const domainsData = domains.data;
+                const domainDetail = domainsData.filter((domain: { idpType: string }) => {
+                    return domain.idpType === 'AzureAd';
+                });
+                domainName = 'todo';
+                forestName = domainDetail[0].idpProperties.tid;
+                idpType = 'AZUREAD';
+                break;
+            case 'okta':
+                domainName = null;
+                forestName = null;
+                idpType = 'OKTA';
+                break;
+            default:
+                console.log(
+                    `Adding subscribers is currently not implemented for this idp: ${workspaceIdentityProvider}`
+                );
+                break;
+        }
+
+        // Get user
+        const users = await this.getQuery({
+            authInstance,
+            cwaAPI,
+            domainName,
+            forestName,
+            appId,
+            query: user,
+            citrixCloudCustomerId,
+            idpType,
+        });
+        let userDetail = users.data.results;
+
+        if (userDetail.length > 1) {
+            // filter group to subscribe
+            const userData = users.data.results;
+            userDetail = userData.filter((e: { accountName: string }) => {
+                return e.accountName === user;
+            });
+        }
+
+        // Update Subscribers
+        await this.updateSubscribers({
+            authInstance,
+            microappsAdminUrl,
+            assign: actionSubscribe,
+            userDetail,
+            appId,
+            domainName,
+            forestName,
+            workspaceIdentityProvider,
+        });
+
+        await this.getSubscribers({
+            authInstance,
+            microappsAdminUrl,
+            appId,
+        });
+    }
+    async addSubscribers({ authInstance, integrationName, microapps, microappsAdminUrl }: AddSubscribers) {
+        const integrationId = await this.getIntegrationId({ authInstance, microappsAdminUrl, integrationName });
+
+        const subscribe = async ({ microapps, microapp, authInstance, integrationId }: Subscribe) => {
+            console.log(`[${integrationName}] - Adding subscribers for: ${microapp}`);
+            const subscribers = microapps[microapp].subscribers;
+            const microappId = await this.getMicroAppId({
+                authInstance,
+                microappsAdminUrl,
+                integrationId,
+                appName: microapp,
+            });
+            for (const subscriber of subscribers) {
+                await this.addSubscriber({
+                    authInstance,
+                    appId: microappId,
+                    user: subscriber,
+                });
+            }
+            return { microapp };
+        };
+
+        const microappsPromises = [];
+        for (const microapp in microapps) {
+            microappsPromises.push(subscribe({ microapps, microapp, authInstance, integrationId }));
+        }
+
+        return await Promise.all(microappsPromises);
+    }
     /**
      * Import Integration from an exported Integration file
      *
