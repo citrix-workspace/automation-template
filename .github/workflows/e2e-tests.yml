@@ -1,41 +1,59 @@
 name: e2e_test
 
-on: 
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'     
-        required: true
-        default: 'warning'
-      tags:
-        description: 'Test scenario tags'  
+on:
+    push:
+    workflow_dispatch:
+        inputs:
+            logLevel:
+                description: 'Log level'
+                required: true
+                default: 'warning'
+            tags:
+                description: 'Test scenario tags'
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    
-    steps:
-      
-      - name: Check out code 
-        uses: actions/checkout@v2
+    test:
+        runs-on: ubuntu-latest
 
-      - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12'
+        steps:
+            - name: Check out code
+              uses: actions/checkout@v2
 
-      - uses: microsoft/playwright-github-action@v1
+            - name: Setup node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '12'
+            - name: Upload artifacts
+              if: always()
+              uses: actions/upload-artifact@v2
+              with:
+                  name: report
+                  path: artifacts/report.json
+
+            - uses: actions/download-artifact@v2
+              if: always()
+              with:
+                name: report
             
-      - name: Install dependencies
-        run: npm ci 
-      
-      - name: Run tests
-        run: npm run test
-      
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-artifacts
-          path: artifacts/
-      
+            - name: Inspect contexts
+              run: |
+                echo "The github context is:"
+                echo "${{ toJson(github) }}"
+                echo ""
+                echo "The job context is:"
+                echo "${{ toJson(job) }}"
+                echo ""
+                echo "The steps context is:"
+                echo "${{ toJson(steps) }}"
+                echo ""
+                echo "The runner context is:"
+                echo "${{ toJson(runner) }}"
+                echo ""
+                echo "The strategy context is:"
+                echo "${{ toJson(strategy) }}"
+                echo ""
+                echo "The matrix context is:"
+                echo "${{ toJson(matrix) }}"
+
+            - name: Read report 
+              run: cat report.json
