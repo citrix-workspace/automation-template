@@ -11,6 +11,8 @@ import {
     CreateHTTPIntegration,
     CreateJavaIntegration,
     ExportApp,
+    ExportIntegrationUI,
+    ExportMicroAppUI,
     GetIntegrationId,
     GetIntegrationType,
     GetMicroAppId,
@@ -746,17 +748,17 @@ export class MicroappsAdmin extends API {
      */
     async importMicroAppUI({ page, microappsAdminUrl, filePath, integrationName }: ImportMicroAppUI) {
         await page.waitForSelector(
-            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
+            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
         );
         await page.click(
-            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
+            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
         );
 
         await page.waitForSelector(
-            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-import-app"]`
+            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-import-app"]`
         );
         await page.click(
-            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-import-app"]`
+            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-import-app"]`
         );
 
         const uploadFile: any = await page.$('input[type=file]');
@@ -768,5 +770,64 @@ export class MicroappsAdmin extends API {
             (response: { url: () => string; status: () => number }) =>
                 response.url() === `${microappsAdminUrl}/api/app` && response.status() === 200
         );
+    }
+
+    /**
+     * Exports @param integrationName integation
+     *
+     * @param {Page} page - Methods to interact with a single tab or extension background page in Browser
+     * @param {string} integrationName - Name of Integration which will be exported
+     */
+    async exportIntegrationUI({ page, integrationName }: ExportIntegrationUI) {
+        await page.waitForSelector(
+            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
+        );
+        await page.click(
+            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
+        );
+
+        await page.waitForSelector(
+            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-export-integration"]`
+        );
+        await page.click(
+            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-export-integration"]`
+        );
+
+        await page.waitForSelector(`//legend[(text()= 'Include Microapps')]`);
+
+        await page.click(`//button[@data-testid="export-integration-commit-button"]`);
+
+        const download = await page.waitForEvent('download');
+
+        if ((await download.path()) === null) {
+            throw new Error('No file was downloaded');
+        }
+    }
+
+    /**
+     * Export @param appName MicroApp from @param integrationName Integration
+     * 
+     * @param {Page} page -  Methods to interact with a single tab or extension background page in Browser
+     * @param {string} integrationName - Name of Integration in which the MicroApp will be imported
+     * @param {string} appName - Name of MicroApp that will be exported
+     */
+    async exportMicroAppsUI({ page, integrationName, appName }: ExportMicroAppUI) {
+        await page.waitForSelector(
+            `//a[@data-testid="integration-name-${integrationName}"] //tr[descendant::a[contains(text(), "${appName}")]] //button[starts-with(@class, "PlainButton")]`
+        );
+        await page.click(
+            `//a[@data-testid="integration-name-${integrationName}"] //tr[descendant::a[contains(text(), "${appName}")]] //button[starts-with(@class, "PlainButton")]`
+        );
+        await page.waitForSelector(
+            `//a[@data-testid="integration-name-${integrationName}"] //tr[descendant::a[contains(text(), "${appName}")]] //button[@data-testid="do-app-export"]`
+        );
+        await page.click(
+            `//a[@data-testid="integration-name-${integrationName}"] //tr[descendant::a[contains(text(), "${appName}")]] //button[@data-testid="do-app-export"]`
+        );
+        const download = await page.waitForEvent('download');
+
+        if ((await download.path()) === null) {
+            throw new Error('No file was downloaded');
+        }
     }
 }
