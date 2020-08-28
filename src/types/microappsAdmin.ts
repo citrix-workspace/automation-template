@@ -295,3 +295,14 @@ export type Subscribe = {
   microapp: string;
   integrationId: string;
 };
+
+export type ExportIntegrationUI = {
+  page: Page;
+  integrationName: string;
+}
+
+export type ExportMicroAppUI = {
+  page: Page;
+  appName: string;
+  integrationName: string;
+}
