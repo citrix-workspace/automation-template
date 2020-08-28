@@ -26,7 +26,7 @@ import {
     UpdateintegrationConfiguration,
     UpdateSubscribers,
     ValidateConfiguration,
-} from '../types/microappsAdmin';
+} from '../types/api';
 
 /** Class representing a Citrix Cloud. */
 export class API {
