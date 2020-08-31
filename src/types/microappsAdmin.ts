@@ -9,27 +9,10 @@ export type Login = {
     secretKey: string;
 };
 
-export type GetIntegrations = {
-    authInstance: any;
-    microappsAdminUrl: string;
-};
-
 export type GetIntegrationId = {
     authInstance: any;
     microappsAdminUrl: string;
     integrationName: string;
-};
-
-export type GetIntegration = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    integrationId: string;
-};
-
-export type IntegrationLogout = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    integrationId: string;
 };
 
 export type OauthLogout = {
@@ -37,13 +20,6 @@ export type OauthLogout = {
     microappsAdminUrl: string;
     integrationName: string;
     repeatCount: number;
-};
-
-export type StartSynchronization = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    integrationId: string;
-    synchronizationType: string;
 };
 
 export type WaitForSync = {
@@ -58,36 +34,11 @@ export type RunSynchronization = {
     synchronizationType: string;
 };
 
-export type GetBundleCatalogue = {
-    authInstance: any;
-    microappsAdminUrl: string;
-};
-
-export type UpdateBundleCatalogue = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    catalogueId: string;
-};
-
-export type UpdateintegrationConfiguration = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    integrationId: string;
-    integrationConfiguration: any;
-};
-
 export type CreateHTTPIntegration = {
     authInstance: any;
     microappsAdminUrl: string;
     integrationName: string;
     integrationConfiguration: any;
-};
-
-export type ValidateConfiguration = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    serviceKey: string;
-    configuration: string;
 };
 
 export type WaitForProcessStatus = {
@@ -96,12 +47,6 @@ export type WaitForProcessStatus = {
     status: string;
     microappsAdminUrl: string;
     processId: string;
-};
-
-export type AddApp = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    data: string;
 };
 
 export type CreateJavaIntegration = {
@@ -115,30 +60,7 @@ export type CreateJavaIntegration = {
     name: string;
 };
 
-export type GetProcessStatus = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    processId: string;
-};
 
-export type GetEntities = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    integrationId: string;
-};
-
-export type CreateEntity = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    integrationId: string;
-    entityData: any;
-};
-
-export type FinalizeConfig = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    integrationId: string;
-};
 
 export type GetIntegrationType = {
     authInstance: any;
@@ -173,11 +95,6 @@ export type ExportApp = {
     pathToFile: string;
 };
 
-export type GetApps = {
-    authInstance: any;
-    microappsAdminUrl: string;
-};
-
 export type GetMicroAppId = {
     authInstance: any;
     microappsAdminUrl: string;
@@ -185,23 +102,11 @@ export type GetMicroAppId = {
     appName: string;
 };
 
-export type GetNotifications = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    appId: string;
-};
-
 export type GetNotificationId = {
     authInstance: any;
     microappsAdminUrl: string;
     appId: string;
     notificationName: string;
-};
-
-export type RunNotificationEvent = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    notificationId: string;
 };
 
 export type RunEvent = {
@@ -216,52 +121,6 @@ export type CheckAppMissconfigurations = {
     authInstance: any;
     microappsAdminUrl: string;
     appId: string;
-};
-
-export type IntegrityCheck = {
-    authInstance: any;
-    microappsAdminUrl: string;
-};
-
-export type DeleteIntegration = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    integrationId: string;
-};
-
-export type GetDomain = {
-    authInstance: any;
-    cwaAPI: string;
-    citrixCloudCustomerId: string;
-    workspaceIdentityProvider: string;
-};
-
-export type GetQuery = {
-    authInstance: any;
-    cwaAPI: string;
-    domainName: string;
-    forestName: string;
-    appId: string;
-    query: string;
-    citrixCloudCustomerId: string;
-    idpType: any;
-};
-
-export type UpdateSubscribers = {
-  authInstance: any;
-  microappsAdminUrl: string;
-  assign: string;
-  userDetail: any;
-  appId: string;
-  domainName: string;
-  forestName: string;
-  workspaceIdentityProvider: string;
-};
-
-export type GetSubscribers = {
-  authInstance: any;
-  microappsAdminUrl: string;
-  appId: string;
 };
 
 export type ImportIntegrationUI = {
@@ -306,11 +165,3 @@ export type ExportMicroAppUI = {
   appName: string;
   integrationName: string;
 }
-
-export type ExportIntegration = {
-    authInstance: any;
-    microappsAdminUrl: string;
-    integrationId: string;
-    filePath: any;
-    params: any;
-  }
