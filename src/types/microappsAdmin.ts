@@ -306,3 +306,11 @@ export type ExportMicroAppUI = {
   appName: string;
   integrationName: string;
 }
+
+export type ExportIntegration = {
+    authInstance: any;
+    microappsAdminUrl: string;
+    integrationId: string;
+    filePath: any;
+    params: any;
+  }

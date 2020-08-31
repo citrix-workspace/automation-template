@@ -1,28 +1,31 @@
 import axios, { AxiosInstance } from 'axios';
 import { GetCitrixCloudTokens } from '../types/citrixCloud';
+import fs from 'fs';
+import path from 'path';
 import {
     AddApp,
-    GetBundleCatalogue,
-    GetIntegration,
-    GetIntegrations,
-    GetProcessStatus,
-    IntegrationLogout,
-    UpdateBundleCatalogue,
-    UpdateintegrationConfiguration,
-    ValidateConfiguration,
-    GetEntities,
     CreateEntity,
+    DeleteIntegration,
+    ExportIntegration,
     FinalizeConfig,
     GetApps,
+    GetBundleCatalogue,
+    GetDomain,
+    GetEntities,
+    GetIntegration,
+    GetIntegrations,
     GetNotifications,
+    GetProcessStatus,
+    GetQuery,
+    GetSubscribers,
+    IntegrationLogout,
+    IntegrityCheck,
     RunNotificationEvent,
     StartSynchronization,
-    IntegrityCheck,
-    DeleteIntegration,
-    GetDomain,
-    GetQuery,
+    UpdateBundleCatalogue,
+    UpdateintegrationConfiguration,
     UpdateSubscribers,
-    GetSubscribers,
+    ValidateConfiguration,
 } from '../types/microappsAdmin';
 
 /** Class representing a Citrix Cloud. */
@@ -328,7 +331,16 @@ export class API {
         }
     }
 
-    async getQuery({ authInstance, cwaAPI, domainName, forestName, appId, query, citrixCloudCustomerId, idpType }: GetQuery) {
+    async getQuery({
+        authInstance,
+        cwaAPI,
+        domainName,
+        forestName,
+        appId,
+        query,
+        citrixCloudCustomerId,
+        idpType,
+    }: GetQuery) {
         try {
             return await authInstance({
                 url: `https://cws.${cwaAPI}.net/${citrixCloudCustomerId}/users/query`,
@@ -432,5 +444,32 @@ export class API {
         } catch (error) {
             throw error.stack;
         }
+    }
+
+    /**
+     * Import Integration from an exported Integration file
+     *
+     * @param {object} authInstance - Axios instance
+     * @param {string} microappsAdminUrl - Microapps Admin Url
+     * @param {string} integrationId - Id of itntegration
+     * @param {string} filePath - Path where to file will be saved
+     * @param {string} params -  Mandatadory params are vendor, appId (which apps will be  exported) and optional param description.
+     * Example: vendor=Citrix&appId=myAppId1&appId=myAppId2&description=
+     */
+
+    async exportIntegration({ authInstance, microappsAdminUrl, integrationId, filePath, params }: ExportIntegration) {
+        let response;
+        try {
+            response = await authInstance({
+                method: 'GET',
+                url: `${microappsAdminUrl}/api/service/${integrationId}/export`,
+                params,
+                responseType: 'stream',
+            });
+        } catch (error) {
+            throw error.stack;
+        }
+
+        await response.data.pipe(fs.createWriteStream(path.resolve(__dirname, filePath)));
     }
 }
