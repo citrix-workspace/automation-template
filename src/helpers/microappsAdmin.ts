@@ -748,17 +748,17 @@ export class MicroappsAdmin extends API {
      */
     async importMicroAppUI({ page, microappsAdminUrl, filePath, integrationName }: ImportMicroAppUI) {
         await page.waitForSelector(
-            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
+            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
         );
         await page.click(
-            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
+            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
         );
 
         await page.waitForSelector(
-            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-import-app"]`
+            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-import-app"]`
         );
         await page.click(
-            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-import-app"]`
+            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-import-app"]`
         );
 
         const uploadFile: any = await page.$('input[type=file]');
@@ -780,17 +780,17 @@ export class MicroappsAdmin extends API {
      */
     async exportIntegrationUI({ page, integrationName }: ExportIntegrationUI) {
         await page.waitForSelector(
-            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
+            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
         );
         await page.click(
-            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
+            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="toggle-integration-options-dropdown"]`
         );
 
         await page.waitForSelector(
-            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-export-integration"]`
+            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-export-integration"]`
         );
         await page.click(
-            `//a[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-export-integration"]`
+            `//div[@data-testid="integration-name-${integrationName}"] //button[@data-testid="open-export-integration"]`
         );
 
         await page.waitForSelector(`//legend[(text()= 'Include Microapps')]`);
@@ -813,16 +813,16 @@ export class MicroappsAdmin extends API {
      */
     async exportMicroAppsUI({ page, integrationName, appName }: ExportMicroAppUI) {
         await page.waitForSelector(
-            `//a[@data-testid="integration-name-${integrationName}"] //tr[descendant::a[contains(text(), "${appName}")]] //button[starts-with(@class, "PlainButton")]`
+            `//div[@data-testid="integration-name-${integrationName}"] //tr[descendant::a[contains(text(), "${appName}")]] //button[starts-with(@class, "PlainButton")]`
         );
         await page.click(
-            `//a[@data-testid="integration-name-${integrationName}"] //tr[descendant::a[contains(text(), "${appName}")]] //button[starts-with(@class, "PlainButton")]`
+            `//div[@data-testid="integration-name-${integrationName}"] //tr[descendant::a[contains(text(), "${appName}")]] //button[starts-with(@class, "PlainButton")]`
         );
         await page.waitForSelector(
-            `//a[@data-testid="integration-name-${integrationName}"] //tr[descendant::a[contains(text(), "${appName}")]] //button[@data-testid="do-app-export"]`
+            `//div[@data-testid="integration-name-${integrationName}"] //tr[descendant::a[contains(text(), "${appName}")]] //button[@data-testid="do-app-export"]`
         );
         await page.click(
-            `//a[@data-testid="integration-name-${integrationName}"] //tr[descendant::a[contains(text(), "${appName}")]] //button[@data-testid="do-app-export"]`
+            `//div[@data-testid="integration-name-${integrationName}"] //tr[descendant::a[contains(text(), "${appName}")]] //button[@data-testid="do-app-export"]`
         );
         const download = await page.waitForEvent('download');
 
