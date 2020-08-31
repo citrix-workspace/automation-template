@@ -11,6 +11,11 @@ export class CitrixCloud extends API {
         super();
     }
 
+    /**
+     * Generates auth code for login to Citrix Cloud
+     * 
+     * @param {string} secretKey - SecretKey for generating the code
+     */
     async getAuthenticatorCode({ secretKey }: GetAuthenticatorCode) {
         return authenticator.generate(secretKey);
     }

@@ -119,6 +119,14 @@ export class Workspace {
         return notificationsBody;
     }
 
+    /**
+     * Wait for FeedCard to show up in Notifications
+     * 
+     * @param {Object} page - Methods to interact with a single tab or extension background page in Browser
+     * @param {string} recordId - Id of the record
+     * @param {number} repeatMax - Max number of tries to find the FeedCard
+     * @param {number} waitTime - Time in miliseconds to wait after each try
+     */
     async waitForFeedCardId({
         page,
         repeatMax = 50,
@@ -155,12 +163,25 @@ export class Workspace {
         return feedCardId;
     }
 
+    /**
+     * Returns button on FeedCard
+     * 
+     * @param {Object} page - Methods to interact with a single tab or extension background page in Browser
+     * @param {string} feedCardId - Id of the FeedCard
+     * @param {string} buttonName - Text on the Button
+     */
     async getFeedCardButton({ page, feedCardId, buttonName }: GetFeedCardButton) {
         return page.$$(
             `xpath=//*[@id="feed-card-body-${feedCardId}"]/ancestor::div[@role="listitem"]//button//div[contains(text(), '${buttonName}')]`
         );
     }
 
+    /**
+     * Wait for success or error pop-up message
+     * 
+     * @param {Object} page - Methods to interact with a single tab or extension background page in Browser
+     * @param {string} text - Text that should be in success message
+     */
     async waitForPopUp({ page, text }: WaitForPopUp) {
         await Promise.race([
             page.waitForSelector(`xpath=//div[contains(text(), "We're unable to process your request")]`),
