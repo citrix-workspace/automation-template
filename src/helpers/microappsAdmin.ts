@@ -646,7 +646,7 @@ export class MicroappsAdmin extends API {
         }
 
         // Get user
-        const users = await this.getQuery({
+        const users = await this.getUsers({
             authInstance,
             cwaAPI,
             domainName,

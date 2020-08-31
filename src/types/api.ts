@@ -113,7 +113,7 @@ export type GetDomain = {
     workspaceIdentityProvider: string;
 };
 
-export type GetQuery = {
+export type GetUsers = {
     authInstance: any;
     cwaAPI: string;
     domainName: string;
