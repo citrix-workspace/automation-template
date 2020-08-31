@@ -1,0 +1,54 @@
+name: e2e_test
+
+on:
+    workflow_dispatch:
+        inputs:
+            logLevel:
+                description: 'Log level'
+                required: true
+                default: 'warning'
+            tags:
+                description: 'Test scenario tags'
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Check out code
+              uses: actions/checkout@v2
+
+            - name: Setup node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '12'
+            - name: Display the path
+              run: |
+                  export serverVersionrTest=$(curl -k -s https:///hotsvcnv6xdz.us.iws.cloud.com/status/up | jq -r '.version')
+                  echo $serverVersionrTest
+                  runNumber="${{ github.run_number }}"
+                  workflowName=echo"${{ github.workflow }}"
+                  repositoryName="${{ github.event.repository.full_name}}"
+                  endDate=${{ steps.date.outputs.date }}
+                  cat artifacts/report.json | jq  -r \ 
+                  --arg buildID "$runNumber" \
+                  --arg jobName "$workflowName" \
+                  --arg integrationName "$repositoryName" \
+                  --arg endTime "$endDate" \
+                  --arg serverVersionrTest "$serverVersionrTest" \
+                      '{
+                      "buildID" :$buildID,
+                      "startTime":"",
+                      "customerIDCC":"hotsvcnv6xdz",
+                      "versionMAServer":$serverVersionrTest,
+                      "integrationName":$integrationName,
+                      "passed":.numPassedTests,
+                      "failed":.numFailedTests,
+                      "skipped":.numPendingTests,
+                      "total":.numTotalTests,
+                      "endTime":$endTime,
+                      "jobName":$jobName,
+                      }' \
+                        > artifacts/report_power_bi.json
+                    cat artifacts/report_power_bi.json
+              shell: bash

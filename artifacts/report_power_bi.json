@@ -1,0 +1,13 @@
+{
+  "buildID": "runNumber,",
+  "startTime": "",
+  "customerIDCC": "hotsvcnv6xdz",
+  "versionMAServer": "1.24.6,",
+  "integrationName": "repositoryName,",
+  "passed": 1,
+  "failed": 0,
+  "skipped": 3,
+  "total": 4,
+  "endTime": "date,",
+  "jobName": "echoahoj,"
+}

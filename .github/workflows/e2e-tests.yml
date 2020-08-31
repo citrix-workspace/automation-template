@@ -1,59 +1,75 @@
 name: e2e_test
 
 on:
-    push:
+  push:
     workflow_dispatch:
-        inputs:
-            logLevel:
-                description: 'Log level'
-                required: true
-                default: 'warning'
-            tags:
-                description: 'Test scenario tags'
+      inputs:
+        logLevel:
+          description: "Log level"
+          required: true
+          default: "warning"
+        tags:
+          description: "Test scenario tags"
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Check out code
-              uses: actions/checkout@v2
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
 
-            - name: Setup node
-              uses: actions/setup-node@v1
-              with:
-                  node-version: '12'
-            - name: Upload artifacts
-              if: always()
-              uses: actions/upload-artifact@v2
-              with:
-                  name: report
-                  path: artifacts/report.json
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12"
 
-            - uses: actions/download-artifact@v2
-              if: always()
-              with:
-                name: report
-            
-            - name: Inspect contexts
-              run: |
-                echo "The github context is:"
-                echo "${{ toJson(github) }}"
-                echo ""
-                echo "The job context is:"
-                echo "${{ toJson(job) }}"
-                echo ""
-                echo "The steps context is:"
-                echo "${{ toJson(steps) }}"
-                echo ""
-                echo "The runner context is:"
-                echo "${{ toJson(runner) }}"
-                echo ""
-                echo "The strategy context is:"
-                echo "${{ toJson(strategy) }}"
-                echo ""
-                echo "The matrix context is:"
-                echo "${{ toJson(matrix) }}"
+      - uses: microsoft/playwright-github-action@v1
 
-            - name: Read report 
-              run: cat report.json
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: |
+           echo "::set-env name=startDate::$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+           npm run ci
+        shell: bash
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-artifacts
+          path: artifacts/
+
+      - name: Send Report to Power BI
+        run: |
+          echo $startDate
+          export serverVersionrTest=$(curl -k -s https:///hotsvcnv6xdz.us.iws.cloud.com/status/up | jq -r '.version')
+          echo $serverVersionrTest
+          export runNumber="${{ github.run_number }}"
+          export workflowName="${{ github.workflow }}"
+          export repositoryName="${{ github.event.repository.name}}"
+          export endDate=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          cat artifacts/report.json | jq  -r --arg buildID "$runNumber" --arg jobName "$workflowName" --arg integrationName "$repositoryName" --arg startTime "$startDate" --arg endTime "$endDate" --arg serverVersionrTest "$serverVersionrTest" \
+              '[{ 
+              "buildID":($buildID)|tonumber,
+              "startTime":$startTime,
+              "customerIDCC":"hotsvcnv6xdz",
+              "versionMAServer":$serverVersionrTest,
+              "integrationName":$integrationName,
+              "passed":.numPassedTests,
+              "failed":.numFailedTests,
+              "skipped":.numPendingTests,
+              "total":.numTotalTests,
+              "endTime":$endTime,
+              "jobName":$jobName,
+              }]' > report_power_bi.json
+          cat report_power_bi.json
+          curl --include \
+              --request POST \
+              --header "Content-Type: application/json" \
+              --data-binary @report_power_bi.json \
+              "https://api.powerbi.com/beta/335836de-42ef-43a2-b145-348c2ee9ca5b/datasets/5c01c86f-a1b6-42de-9d71-fcf8385b3bc1/rows?key=fMpC8%2B2LtzwJCcWlwCU0tMiEOv%2FioyWIRNGxEHFbWmN1p0%2F9GIkUwE83A3GSeokB6vcubMzmWSo%2FGNNYYGafEQ%3D%3D"
+
+        shell: bash
