@@ -15,6 +15,7 @@ import {
     ExportMicroAppUI,
     GetIntegrationId,
     GetIntegrationType,
+    GetLastSyncTime,
     GetMicroAppId,
     GetNotificationId,
     GetStatusIntegration,
@@ -828,6 +829,29 @@ export class MicroappsAdmin extends API {
 
         if ((await download.path()) === null) {
             throw new Error('No file was downloaded');
+        }
+    }
+
+    /**
+     * Returns last duration of Synchronization
+     * 
+     * @param {Object} authInstance - Authorized instance for API calls
+     * @param {string} microappsAdminUrl - Microapps admin url
+     * @param {string} integrationName - Name of Integration
+     */
+    async getLastTimeSync({ authInstance, microappsAdminUrl, integrationName }: GetLastSyncTime) {
+        const regex = new RegExp(/\d*:\d*:\d*.\d*/);
+
+        const integrationId = await this.getIntegrationId({ authInstance, microappsAdminUrl, integrationName});
+
+        const integrationType = await this.getIntegrationType({authInstance, microappsAdminUrl, integrationName});
+
+        const logs = await this.getIntegrationLog({ authInstance, microappsAdminUrl, integrationId, integrationType });
+
+        for (const line of logs.data.data){
+            if (line.message.includes('Service synchronization finished in')){
+                return line.message.match(regex)[0];
+            }
         }
     }
 }

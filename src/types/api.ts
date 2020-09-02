@@ -148,3 +148,10 @@ export type UpdateSubscribers = {
     filePath: any;
     params: any;
   }
+
+  export type GetIntegrationLog = {
+    authInstance: any;
+    microappsAdminUrl: string;
+    integrationId: string;
+    integrationType: string;
+};

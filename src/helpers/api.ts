@@ -13,6 +13,7 @@ import {
     GetDomain,
     GetEntities,
     GetIntegration,
+    GetIntegrationLog,
     GetIntegrations,
     GetNotifications,
     GetProcessStatus,
@@ -614,5 +615,24 @@ export class API {
         }
 
         await response.data.pipe(fs.createWriteStream(path.resolve(__dirname, filePath)));
+    }
+
+    /**
+     * get integration log
+     * @param {Object} authInstance - Authorized instance for API calls
+     * @param {string} microappsAdminUrl - Microapps admin url
+     * @param {string} integrationName - Name of Integration
+     * @param {string} integrationType - Type of Integration
+     */
+
+    async getIntegrationLog({ authInstance, microappsAdminUrl, integrationId, integrationType }: GetIntegrationLog) {
+        try {
+            return await authInstance({
+                url: `${microappsAdminUrl}/api/event-log?entityRef=${integrationId}&type=${integrationType}&subType=JOB&offset=0&limit=20`,
+                method: 'GET',
+            });
+        } catch (error) {
+            throw error.stack;
+        }
     }
 }

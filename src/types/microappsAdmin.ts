@@ -165,3 +165,9 @@ export type ExportMicroAppUI = {
   appName: string;
   integrationName: string;
 }
+
+export type GetLastSyncTime = {
+    authInstance: any;
+    microappsAdminUrl: string;
+    integrationName: string;
+}
