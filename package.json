@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest -i src/__tests__"
+    "test": "jest -i src/__tests__",
+    "ci": "jest -i --json --outputFile=artifacts/report.json src/__tests__"
   },
   "repository": {
     "type": "git",
