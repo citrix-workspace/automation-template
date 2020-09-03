@@ -26,7 +26,7 @@ export const initBrowserPlaywright = async () => {
 export const it = function (testName: string, func: ({ page, context, browser }: It) => any) {
     return test(testName, async () => {
         const browser = await initBrowserPlaywright();
-        const context: CustomContext = await browser.newContext({ viewport: null });
+        const context: CustomContext = await browser.newContext();
         const page = await context.newPage();
         context.testName = testName;
         page.setDefaultTimeout(defaultTimeout);
