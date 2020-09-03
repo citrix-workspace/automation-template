@@ -69,6 +69,6 @@ jobs:
               --request POST \
               --header "Content-Type: application/json" \
               --data-binary @report_power_bi.json \
-              "https://api.powerbi.com/beta/335836de-42ef-43a2-b145-348c2ee9ca5b/datasets/5c01c86f-a1b6-42de-9d71-fcf8385b3bc1/rows?key=fMpC8%2B2LtzwJCcWlwCU0tMiEOv%2FioyWIRNGxEHFbWmN1p0%2F9GIkUwE83A3GSeokB6vcubMzmWSo%2FGNNYYGafEQ%3D%3D"
+              "${{ secrets.POWER_BI_API_KEY }}"
 
         shell: bash
