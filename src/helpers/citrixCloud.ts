@@ -51,6 +51,7 @@ export class CitrixCloud extends API {
     async createAuthInstance({ bearerToken }: CreateAuthInstance) {
         const authInstance = axios.create({});
         authInstance.defaults.headers.common['Authorization'] = `CWSAuth bearer=${bearerToken}`;
+        authInstance.defaults.timeout = 90000;
         return authInstance;
     }
 }
