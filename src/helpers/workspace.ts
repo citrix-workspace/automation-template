@@ -97,11 +97,12 @@ export class Workspace {
      * Start Action
      * @param {Object} page - Methods to interact with a single tab or extension background page in Browser
      * @param {string} actionName - name of Action what should be executed
+     * @param {string} integrationName - name of Integration the action belongs to
      */
 
-    async startAction({ page, actionName }: StartAction) {
+    async startAction({ page, actionName, integrationName }: StartAction) {
         console.log(`Choosing action ${actionName}`, new Date());
-        await page.click(`div >> text=${actionName}`);
+        await page.click(`//div[descendant::div[contains(text(), "${integrationName}")]] //div[contains(text(), "${actionName}")]`);
     }
 
     /**
