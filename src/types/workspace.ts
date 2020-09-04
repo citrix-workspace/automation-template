@@ -18,6 +18,7 @@ export type GoToActions = {
 export type StartAction = {
     page: Page;
     actionName: string;
+    integrationName: string;
 };
 
 export type GetFeedNotifications = {
