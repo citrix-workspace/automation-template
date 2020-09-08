@@ -102,7 +102,7 @@ export class Workspace {
 
     async startAction({ page, actionName, integrationName }: StartAction) {
         console.log(`Choosing action ${actionName}`, new Date());
-        await page.click(`//div[descendant::div[contains(text(), "${integrationName}")]] //div[contains(text(), "${actionName}")]`);
+        await page.click(`//button[descendant::div[@title="${integrationName}"]] //div[contains(text(), "${actionName}")]`);
     }
 
     /**
