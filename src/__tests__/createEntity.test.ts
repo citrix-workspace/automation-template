@@ -1,5 +1,5 @@
 import { it, step, run } from '../../init';
-import { Workspace } from '../helpers/workspace';
+import { Workspace } from 'microapps-automation-helper';
 import { config } from '../../config';
 
 const { workspaceUrl, workspaceUsername, workspacePassword, workspaceIdentityProvider } = config;
@@ -7,6 +7,7 @@ const { workspaceUrl, workspaceUsername, workspacePassword, workspaceIdentityPro
 const workspace = new Workspace();
 const FIXTURE_NAME = '_Create Entity from Workspace Action_';
 const actionName = 'Create Entity';
+const integrationName = 'Awesome Integration'
 
 let recordId: string;
 
@@ -27,7 +28,7 @@ describe.skip(FIXTURE_NAME, () => {
         });
 
         await step(context)(`Click Action ${actionName}`, async () => {
-            await workspace.startAction({ page, actionName });
+            await workspace.startAction({ page, actionName, integrationName });
         });
 
         await step(context)('Wait for Blade to load', async () => {
