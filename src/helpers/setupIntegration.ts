@@ -1,6 +1,5 @@
 import { config } from '../../config';
-import { CitrixCloud } from '../helpers/citrixCloud';
-import { MicroappsAdmin } from '../helpers/microappsAdmin';
+import { CitrixCloud, MicroappsAdmin } from 'microapps-automation-helper';
 import matrix from '../data/matrix';
 
 const { microappsAdminUrl, citrixCloudClientId, citrixCloudClientSecret, citrixCloudCustomerId, cwaAPI } = config;
@@ -61,7 +60,7 @@ export const setupIntgration = async () => {
         await microappsAdmin.checkAppMissconfigurations({ authInstance, microappsAdminUrl, appId });
     }
 
-    await microappsAdmin.addSubscribers({ authInstance, integrationName, microappsAdminUrl, microapps });
+    await microappsAdmin.addSubscribers({ authInstance, integrationName, microappsAdminUrl, microapps, config });
 
     await microappsAdmin.getIntegration({ authInstance, microappsAdminUrl, integrationId });
 
