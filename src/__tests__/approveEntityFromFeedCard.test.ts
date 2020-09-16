@@ -1,7 +1,5 @@
 import { it, step, run } from '../../init';
-import { Workspace } from '../helpers/workspace';
-import { CitrixCloud } from '../helpers/citrixCloud';
-import { MicroappsAdmin } from '../helpers/microappsAdmin';
+import { Workspace, CitrixCloud, MicroappsAdmin } from 'microapps-automation-helper';
 import { config } from '../../config';
 
 const {

@@ -1,7 +1,5 @@
 import { it, step, run } from '../../init';
-import { Workspace } from '../helpers/workspace';
-import { CitrixCloud } from '../helpers/citrixCloud';
-import { MicroappsAdmin } from '../helpers/microappsAdmin';
+import { Workspace, CitrixCloud, MicroappsAdmin } from 'microapps-automation-helper';
 import { config } from '../../config';
 
 const {
@@ -98,7 +96,6 @@ describe.skip(FIXTURE_NAME, () => {
         });
 
         await step(context)('Click on Feed Card and open Blade', async () => {
-            const feedCardId = '5f1e5a20661f2c4230f6049e'
             await page.waitForSelector(`#feed-card-body-${feedCardId}`);
             await page.click(`#feed-card-body-${feedCardId}`);
         });
