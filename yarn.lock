@@ -2616,10 +2616,10 @@ merge-stream@^2.0.0:
   resolved "https://registry.yarnpkg.com/merge-stream/-/merge-stream-2.0.0.tgz#52823629a14dd00c9770fb6ad47dc6310f2c1f60"
   integrity sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==
 
-microapps-automation-helper@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/microapps-automation-helper/-/microapps-automation-helper-1.0.6.tgz#042fb89b92635008817e2feebcbadfd8477ea98e"
-  integrity sha512-35INaVroLZh2djrdBFJZ52FqifPnkDLvuiJLttm/762pscYDXbnkh1NoXzwEBqF1yiYViITDvULvID157hkrMA==
+microapps-automation-helper@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/microapps-automation-helper/-/microapps-automation-helper-1.0.7.tgz#d3223b3c3197241802ca7afd140c5b90011af29d"
+  integrity sha512-9beA6b++ongkwEz9W96oj3G1HUdMj2rciK36OqtaSbZzm4HiVN4JbBtfU7IipPr2EtKW0yQqb9iV/EsYfCluww==
   dependencies:
     axios "^0.20.0"
     form-data "^3.0.0"

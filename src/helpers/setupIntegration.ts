@@ -8,6 +8,7 @@ const microapps = matrix.integrations.integration.microapps;
 const integrationName = matrix.integrations.integration.settings.name;
 const pathToFile = matrix.integrations.integration.settings.pathToFile;
 const integrationConfiguration = matrix.integrations.integration.settings.configuration;
+const secrets = matrix.integrations.integration.settings.secrets;
 
 const citrixCloud = new CitrixCloud();
 const microappsAdmin = new MicroappsAdmin();
@@ -48,6 +49,7 @@ export const setupIntgration = async () => {
         integrationConfiguration,
     });
 
+    await microappsAdmin.addSecrets({ authInstance, microappsAdminUrl, integrationId, data: secrets });
     const appsRespnonse = await microappsAdmin.getApps({ authInstance, microappsAdminUrl });
     const appsData = appsRespnonse.data;
     const apps = appsData.filter((e: any) => e.app.serviceId === integrationId);

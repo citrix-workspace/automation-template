@@ -6,6 +6,7 @@ module.exports = {
                 name: '',
                 pathToFile: path.resolve(__dirname, '../data/**.mapp'),
                 configuration: {},
+                secrets:{},
             },
             microapps: {
                 microapp1: {
