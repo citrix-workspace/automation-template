@@ -1,9 +1,10 @@
+const path = require('path');
 module.exports = {
     integrations: {
         integration: {
             settings: {
                 name: '',
-                pathToFile: '../data/**.mapp',
+                pathToFile: path.resolve(__dirname, '../data/**.mapp'),
                 configuration: {},
             },
             microapps: {
