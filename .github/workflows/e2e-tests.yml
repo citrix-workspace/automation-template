@@ -1,14 +1,14 @@
 name: e2e_test
 
 on:
-    workflow_dispatch:
-      inputs:
-        logLevel:
-          description: "Log level"
-          required: true
-          default: "warning"
-        tags:
-          description: "Test scenario tags"
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: "Log level"
+        required: true
+        default: "warning"
+      tags:
+        description: "Test scenario tags"
 
 jobs:
   test:
@@ -40,8 +40,20 @@ jobs:
         with:
           name: test-artifacts
           path: artifacts/
+      
+      - name: Send Notification to Slack
+        if: failure()      
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_CHANNEL: wsi-factory-test-results
+          SLACK_COLOR: '#E01E5A'
+          SLACK_TITLE: Test status
+          SLACK_MESSAGE: ':warning: *Repository:* ${{ github.event.repository.name}}  *Result:* ${{ job.status }} :warning:'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          MSG_MINIMAL: false
 
       - name: Send Report to Power BI
+        if: always()
         run: |
           echo $startDate
           export serverVersionrTest=$(curl -k -s https:///hotsvcnv6xdz.us.iws.cloud.com/status/up | jq -r '.version')
