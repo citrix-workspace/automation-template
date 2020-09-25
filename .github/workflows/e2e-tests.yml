@@ -1,6 +1,9 @@
 name: e2e_test
 
 on:
+# schedule:
+    # * it will run at 1 A.M and 1 P.M
+    # - cron:  '00 01,13 * * *'
   workflow_dispatch:
     inputs:
       logLevel:
