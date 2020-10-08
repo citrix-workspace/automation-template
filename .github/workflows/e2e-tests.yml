@@ -33,7 +33,7 @@ jobs:
 
       - name: Run tests
         run: |
-           echo "::set-env name=startDate::$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+           echo "startDate=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
            yarn ci
         shell: bash
 
@@ -44,14 +44,25 @@ jobs:
           name: test-artifacts
           path: artifacts/
       
-      - name: Send Notification to Slack
-        if: always()      
+      - name: Send Notification to Slack - Failure
+        if: false == contains(job.status,'success')
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_CHANNEL: wsi-factory-test-results
           SLACK_COLOR: '#E01E5A'
           SLACK_TITLE: Test status
           SLACK_MESSAGE: ':warning: *Repository:* ${{ github.event.repository.name}}  *Result:* ${{ job.status }} :warning:'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          MSG_MINIMAL: false
+        
+      - name: Send Notification to Slack - Success
+        if: contains(job.status,'success')
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_CHANNEL: wsi-factory-test-results
+          SLACK_COLOR: '#80FF33'
+          SLACK_TITLE: Test status
+          SLACK_MESSAGE: ':success-icon: *Repository:* ${{ github.event.repository.name}}  *Result:* ${{ job.status }} :success-icon:'
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           MSG_MINIMAL: false
 
