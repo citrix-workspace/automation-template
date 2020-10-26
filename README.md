@@ -353,6 +353,56 @@ const button = await workspace.getFeedCardButton({ page, feedCardId, buttonName 
 await button[0].click();
 ```
 
+### Example of screenshot comparation
+
+For screenshot testing we are using tool Jest Image Snapshot 
+This tool is comapring actual state of a page or page component with saved image
+During the first run the benchmark image is created. This image has to be check if the UI is in demanded state
+
+```ts
+
+describe(FIXTURE_NAME, () => {
+
+
+    it(FIXTURE_NAME, async ({ context, page }) => {
+        const testIdentificator = getTestId();
+        console.log(testIdentificator);
+
+        await step(context)('Login to Workspace', async () => {
+            await workspaceUi.login({
+                page,
+                workspaceUrl,
+                workspaceUsername: username,
+                workspacePassword: password,
+                workspaceIdentityProvider: idp,
+            });
+        });
+
+        await step(context)('Go to Action page', async () => {
+            await workspaceUi.goToActions({ page });
+        });
+
+        await step(context)('Click on "Create Account" MicroApp', async () => {
+            await workspaceUi.startAction({ page, actionName: 'Create Account' });
+        });
+
+        await step(context)('Wait for Blade to load', async () => {
+            await page.waitForSelector('[data-testid="text-input-account"]');
+        });
+
+        /// this is the main part of the test, screenshot is taken a compared to the saved one
+
+        await step(context)('Compare screenshots', async () => {
+            //take a screenshot
+            const screenshot = await page.screenshot()
+            expect.extend({ toMatchImageSnapshot });
+            expect(screenshot).toMatchImageSnapshot();
+        });
+    });
+});
+```
+
+
 [typescript]: https://www.typescriptlang.org/
 [prettier]: https://prettier.io/
 [jest]: https://jestjs.io/
