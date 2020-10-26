@@ -355,9 +355,9 @@ await button[0].click();
 
 ### Example of screenshot comparation
 
-# For screenshot testing we are using tool Jest Image Snapshot 
-# This tool is comapring actual state of a page or page component with saved image
-# During the first run the benchmark image is created. This image has to be check if the UI is in demanded state
+For screenshot testing we are using tool Jest Image Snapshot 
+This tool is comapring actual state of a page or page component with saved image
+During the first run the benchmark image is created. This image has to be check if the UI is in demanded state
 
 ```ts
 
