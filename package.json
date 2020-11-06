@@ -19,6 +19,7 @@
   "homepage": "https://github.com/citrix-workspace/automation-template#readme",
   "dependencies": {
     "@types/jest": "^26.0.5",
+    "@types/jest-image-snapshot": "^4.1.3",
     "axios": "^0.19.2",
     "form-data": "^3.0.0",
     "jest": "^26.1.0",
