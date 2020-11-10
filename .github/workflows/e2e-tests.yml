@@ -45,7 +45,7 @@ jobs:
           path: artifacts/
       
       - name: Send Notification to Slack - Failure
-        if: false == contains(job.status,'success')
+        if: ${{ failure() }} 
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_CHANNEL: wsi-factory-test-results
@@ -56,7 +56,6 @@ jobs:
           MSG_MINIMAL: false
         
       - name: Send Notification to Slack - Success
-        if: contains(job.status,'success')
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_CHANNEL: wsi-factory-test-results
