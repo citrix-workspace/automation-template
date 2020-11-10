@@ -21,16 +21,24 @@
     "@types/jest": "^26.0.5",
     "@types/jest-image-snapshot": "^4.1.3",
     "axios": "^0.19.2",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "form-data": "^3.0.0",
     "jest": "^26.1.0",
     "jest-image-snapshot": "^4.2.0",
     "microapps-automation-helper": "^1.0.7",
     "otplib": "^12.0.1",
     "playwright": "^1.4.0",
+    "prettier": "^2.1.2",
     "time-stamp": "^2.2.0",
     "ts-jest": "^26.1.3",
     "ts-node": "^8.10.2",
     "typedoc": "^0.17.8",
     "typescript": "^3.9.7"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
+    "eslint": "^7.13.0"
   }
 }
