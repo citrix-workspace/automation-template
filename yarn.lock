@@ -3158,16 +3158,16 @@ merge2@^1.3.0:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
-microapps-automation-helper@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/microapps-automation-helper/-/microapps-automation-helper-1.0.9.tgz#d3e45f58605a1ad4f7c23938ee6b1d76f12cfbb7"
-  integrity sha512-PHjb4bvVkNZ/uoslLAkIuwdXfPdTepKya9j0r3gkhD4GvcFv7sOUk3L4p9o+VUjNUDNG82zV2HiBxuomn8x+cg==
+microapps-automation-helper@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/microapps-automation-helper/-/microapps-automation-helper-1.0.10.tgz#732d0c00f1f309927c7205177ac49051f29d10ed"
+  integrity sha512-kC//MPBk7xU2IyQlYxvhn4kxhpRHKFj+KfzcH6QeZhh2UzQKGL+sNJ5s32GsfUg8pc0rOk2mQ5E6NwBhdXDptQ==
   dependencies:
     axios "^0.20.0"
     form-data "^3.0.0"
     otplib "^12.0.1"
-    playwright "^1.4.0"
-    typescript "^4.0.2"
+    playwright "^1.5.2"
+    typescript "^4.0.5"
 
 micromatch@^3.1.4:
   version "3.1.10"
@@ -3551,22 +3551,6 @@ pkg-dir@^4.2.0:
   integrity sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==
   dependencies:
     find-up "^4.0.0"
-
-playwright@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.4.0.tgz#216e153ce8935290cdf08ff73d075cfaac31b1fc"
-  integrity sha512-x8aK5zZXNW+73QiEtyK4fK1rY0MMUpEsieTExlkNrBNF7DD6Qc+85oyp6sCg0iPoYkr4IZctFJdkMcECOTZ28w==
-  dependencies:
-    debug "^4.1.1"
-    extract-zip "^2.0.1"
-    https-proxy-agent "^5.0.0"
-    jpeg-js "^0.4.2"
-    mime "^2.4.6"
-    pngjs "^5.0.0"
-    progress "^2.0.3"
-    proxy-from-env "^1.1.0"
-    rimraf "^3.0.2"
-    ws "^7.3.1"
 
 playwright@^1.5.2:
   version "1.5.2"
@@ -4505,11 +4489,6 @@ typedoc@^0.19.2:
     semver "^7.3.2"
     shelljs "^0.8.4"
     typedoc-default-themes "^0.11.4"
-
-typescript@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.2.tgz#7ea7c88777c723c681e33bf7988be5d008d05ac2"
-  integrity sha512-e4ERvRV2wb+rRZ/IQeb3jm2VxBsirQLpQhdxplZ2MEzGvDkkMmPglecnNDfSUBivMjP93vRbngYYDQqQ/78bcQ==
 
 typescript@^4.0.5:
   version "4.0.5"

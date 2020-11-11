@@ -29,7 +29,7 @@
     "form-data": "^3.0.0",
     "jest": "^26.6.3",
     "jest-image-snapshot": "^4.2.0",
-    "microapps-automation-helper": "^1.0.9",
+    "microapps-automation-helper": "^1.0.10",
     "otplib": "^12.0.1",
     "playwright": "^1.5.2",
     "prettier": "^2.1.2",
