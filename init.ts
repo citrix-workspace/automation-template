@@ -4,14 +4,13 @@ import path from 'path';
 import { config } from './config';
 import { It, CustomContext, CreateScreenshots } from './src/types/init';
 
-const { screenshotOnEachStep, devtools, headless, defaultTimeout } = config;
+const { screenshotOnEachStep, devtools, headless, defaultTimeout, loggErrors } = config;
 
 const ts = () => timestamp('HH:mm:ss');
 
 const { chromium, webkit, firefox } = playwright;
 
 const browserType: BrowserType<Browser> = chromium;
-const loggErrors: boolean = true;
 
 const logTestDuration = async function (startTime: Date) {
     const endTime = new Date();
@@ -23,7 +22,7 @@ export const initBrowserPlaywright = async () => {
     return await browserType.launch({ headless, devtools, timeout: 600000, args: ["--no-sandbox"] });
 };
 
-export const it = function (testName: string, func: ({ page, context, browser }: It) => any) {
+export const it = function (testName: string, func: ({ page, context, browser }: It) => void) {
     return test(testName, async () => {
         const browser = await initBrowserPlaywright();
         const context: CustomContext = await browser.newContext();
@@ -39,7 +38,7 @@ export const it = function (testName: string, func: ({ page, context, browser }:
             console.info(ts(), `➡️  ${testName}`);
             page.on(
                 'response',
-                async (response: { ok: () => any; text: () => any; status: () => any; url: () => any }) => {
+                async (response: { ok: () => boolean; text: () => Promise<string>; status: () => number; url: () => string }) => {
                     if (loggErrors && !response.ok()) {
                         try {
                             const text = await response.text();
@@ -95,7 +94,7 @@ const createScreenshots = async ({ context, stepName = '', capture }: CreateScre
     }
 };
 
-export const step = (context: BrowserContext) => async (stepName: string, func: () => any) => {
+export const step = (context: BrowserContext) => async (stepName: string, func: () => void) => {
     try {
         await func();
         // Creates screenshots on each step
@@ -110,7 +109,7 @@ export const step = (context: BrowserContext) => async (stepName: string, func: 
     }
 };
 
-export const run = async (runName: string, func: () => any) => {
+export const run = async (runName: string, func: () => void) => {
     try {
         await func();
         console.info(ts(), `✅ ${runName}`);
