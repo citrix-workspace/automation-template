@@ -16,6 +16,6 @@ export const config = {
     microappsAdminUrl: ``,
     loggerFilter: `.${process.env.CONFIG_BUILDER_URL}(.*)initiator_type=BUTTON`,
     defaultTimeout: 90000,
-    shouldConfigureIntegrations: false
-    
+    shouldConfigureIntegrations: false,
+    loggErrors: true
 };

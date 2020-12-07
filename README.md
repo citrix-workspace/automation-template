@@ -31,24 +31,17 @@ automation-template/
         createEntity.test.ts
         example.test.ts
     helpers/
-        api.ts
-        citrixCloud.ts
-        microappsAdmin.ts
-        setupintegrations.ts
-        workspace.ts
+        setupIntegration.ts
     types/
-        api.ts
-        citrixCloud.ts
         init.ts
-        microappsAdmin.ts
-        workspace.ts
 ```
 ## Related projects we use
 
--   [TypeScript]
--   [Jest]
--   [Prettier]
--   [Playwright]
+-   [TypeScript](https://www.typescriptlang.org/docs)
+-   [Jest](https://jestjs.io/docs/en/getting-started)
+-   [Prettier](https://prettier.io/docs/en/index.html)
+-   [Playwright](https://playwright.dev/)
+-   [dotenv](https://github.com/motdotla/dotenv#readme)
 
 ## Getting Started
 
@@ -57,17 +50,29 @@ automation-template/
 ```bash
 yarn
 ```
+##### How to handle local secrets
 
+To be able to load your env variables, you can create your own config:
+```
+touch .env
+```
+
+Example of .env
+```
+CONFIG_WORKSPACE_USERNAME=jon@doe.com
+CONFIG_WORKSPACE_PASSWORD-myP@ssword1
+```
+:warning: Don`t commit .env file into repository - you can add .env to .gitignore and now you can run yor test 
 #### Running All Tests locally
 
 ```bash
-yarn test
+yarn jest src/__tests__ --setupFiles dotenv/config
 ```
 
-#### Running Single Test locally
+#### Running Single Test locally with env config
 
 ```bash
-yarn jest tests/example.test.ts
+yarn jest src/__tests__/example.test.ts --setupFiles dotenv/config
 ```
 
 ### Example of Test

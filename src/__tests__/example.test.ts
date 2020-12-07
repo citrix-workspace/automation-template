@@ -10,7 +10,6 @@ describe(FIXTURE_NAME, () => {
 
         await step(context)('Assert href', async () => {
             const href = await page.evaluate(() => { return document.location.href});
-            console.log(href);
             expect(href).toEqual('https://www.example.com/')
         });
        
