@@ -1,99 +1,103 @@
 name: e2e_test
 
 on:
-# schedule:
+    # schedule:
     # * it will run at 1 A.M and 1 P.M
     # - cron:  '00 01,13 * * *'
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: "Log level"
-        required: true
-        default: "warning"
-      tags:
-        description: "Test scenario tags"
+    workflow_dispatch:
+        inputs:
+            testList:
+                description: 'Test map'
+                required: false
+                default:
+            logLevel:
+                description: 'Log level'
+                required: true
+                default: 'warning'
+            tags:
+                description: 'Test scenario tags'
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+    test:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
+        steps:
+            - name: Check out code
+              uses: actions/checkout@v2
 
-      - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: "12"
+            - name: Setup node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '12'
 
-      - uses: microsoft/playwright-github-action@v1
+            - uses: microsoft/playwright-github-action@v1
 
-      - name: Install dependencies
-        run: yarn install  --frozen-lockfile
+            - name: Install dependencies
+              run: yarn install  --frozen-lockfile
 
-      - name: Run tests
-        run: |
-           echo "startDate=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
-           yarn ci
-        shell: bash
+            - name: Run tests
+              run: |
+                  echo "startDate=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
+                  yarn jest -i --json --outputFile=artifacts/report.json --testNamePattern="${{github.event.inputs.testList}}"
+              shell: bash
 
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-artifacts
-          path: artifacts/
-      
-      - name: Send Notification to Slack - Failure
-        if: ${{ failure() }} 
-        uses: rtCamp/action-slack-notify@master
-        env:
-          SLACK_CHANNEL: wsi-factory-test-results
-          SLACK_COLOR: '#E01E5A'
-          SLACK_TITLE: Test status
-          SLACK_MESSAGE: ':warning: *Repository:* ${{ github.event.repository.name}}  *Result:* ${{ job.status }} :warning:'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          MSG_MINIMAL: false
-        
-      - name: Send Notification to Slack - Success
-        uses: rtCamp/action-slack-notify@master
-        env:
-          SLACK_CHANNEL: wsi-factory-test-results
-          SLACK_COLOR: '#80FF33'
-          SLACK_TITLE: Test status
-          SLACK_MESSAGE: ':success-icon: *Repository:* ${{ github.event.repository.name}}  *Result:* ${{ job.status }} :success-icon:'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          MSG_MINIMAL: false
+            - name: Upload artifacts
+              if: always()
+              uses: actions/upload-artifact@v2
+              with:
+                  name: test-artifacts
+                  path: artifacts/
 
-      - name: Send Report to Power BI
-        if: always()
-        run: |
-          echo $startDate
-          export serverVersionrTest=$(curl -k -s https:///hotsvcnv6xdz.us.iws.cloud.com/status/up | jq -r '.version')
-          echo $serverVersionrTest
-          export runNumber="${{ github.run_number }}"
-          export workflowName="${{ github.workflow }}"
-          export repositoryName="${{ github.event.repository.name}}"
-          export endDate=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          cat artifacts/report.json | jq  -r --arg buildID "$runNumber" --arg jobName "$workflowName" --arg integrationName "$repositoryName" --arg startTime "$startDate" --arg endTime "$endDate" --arg serverVersionrTest "$serverVersionrTest" \
-              '[{ 
-              "buildID":($buildID)|tonumber,
-              "startTime":$startTime,
-              "customerIDCC":"hotsvcnv6xdz",
-              "versionMAServer":$serverVersionrTest,
-              "integrationName":$integrationName,
-              "passed":.numPassedTests,
-              "failed":.numFailedTests,
-              "skipped":.numPendingTests,
-              "total":.numTotalTests,
-              "endTime":$endTime,
-              "jobName":$jobName,
-              }]' > report_power_bi.json
-          cat report_power_bi.json
-          curl --include \
-              --request POST \
-              --header "Content-Type: application/json" \
-              --data-binary @report_power_bi.json \
-              "${{ secrets.POWER_BI_API_KEY }}"
+            - name: Send Notification to Slack - Failure
+              if: ${{ failure() }}
+              uses: rtCamp/action-slack-notify@master
+              env:
+                  SLACK_CHANNEL: wsi-factory-test-results
+                  SLACK_COLOR: '#E01E5A'
+                  SLACK_TITLE: Test status
+                  SLACK_MESSAGE: ':warning: *Repository:* ${{ github.event.repository.name}}  *Result:* ${{ job.status }} :warning:'
+                  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+                  MSG_MINIMAL: false
 
-        shell: bash
+            - name: Send Notification to Slack - Success
+              uses: rtCamp/action-slack-notify@master
+              env:
+                  SLACK_CHANNEL: wsi-factory-test-results
+                  SLACK_COLOR: '#80FF33'
+                  SLACK_TITLE: Test status
+                  SLACK_MESSAGE: ':success-icon: *Repository:* ${{ github.event.repository.name}}  *Result:* ${{ job.status }} :success-icon:'
+                  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+                  MSG_MINIMAL: false
+
+            - name: Send Report to Power BI
+              if: always()
+              run: |
+                  echo $startDate
+                  export serverVersionrTest=$(curl -k -s https:///hotsvcnv6xdz.us.iws.cloud.com/status/up | jq -r '.version')
+                  echo $serverVersionrTest
+                  export runNumber="${{ github.run_number }}"
+                  export workflowName="${{ github.workflow }}"
+                  export repositoryName="${{ github.event.repository.name}}"
+                  export endDate=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+                  cat artifacts/report.json | jq  -r --arg buildID "$runNumber" --arg jobName "$workflowName" --arg integrationName "$repositoryName" --arg startTime "$startDate" --arg endTime "$endDate" --arg serverVersionrTest "$serverVersionrTest" \
+                      '[{ 
+                      "buildID":($buildID)|tonumber,
+                      "startTime":$startTime,
+                      "customerIDCC":"hotsvcnv6xdz",
+                      "versionMAServer":$serverVersionrTest,
+                      "integrationName":$integrationName,
+                      "passed":.numPassedTests,
+                      "failed":.numFailedTests,
+                      "skipped":.numPendingTests,
+                      "total":.numTotalTests,
+                      "endTime":$endTime,
+                      "jobName":$jobName,
+                      }]' > report_power_bi.json
+                  cat report_power_bi.json
+                  curl --include \
+                      --request POST \
+                      --header "Content-Type: application/json" \
+                      --data-binary @report_power_bi.json \
+                      "${{ secrets.POWER_BI_API_KEY }}"
+
+              shell: bash
