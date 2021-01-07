@@ -1,6 +1,6 @@
 import { it, step } from '../../init';
 
-const FIXTURE_NAME = 'example';
+const FIXTURE_NAME = '_Example_';
 
 describe(FIXTURE_NAME, () => {
     it(FIXTURE_NAME, async ({ context, page }) => {

@@ -3078,17 +3078,10 @@ merge2@^1.3.0:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
-<<<<<<< HEAD
-microapps-automation-helper@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/microapps-automation-helper/-/microapps-automation-helper-1.2.2.tgz#719633355d6ac37ba9407d85372ba473cdb38347"
-  integrity sha512-7UKUSoWbk3xbnX+dhhG3aVF5wW84fxbGfZhgEnaUaNCBxC18E4dwncby59RC3siiERjuecFFYgXFMBLXU+0Iig==
-=======
-microapps-automation-helper@^1.0.10:
+microapps-automation-helper@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/microapps-automation-helper/-/microapps-automation-helper-1.2.3.tgz#90b83d70b0899162baf8beca011077e1cc83beba"
   integrity sha512-OvI6CT+NPwDifNQCyQiUu/+UvKiZPlSmEC+alV/bdLihUnAOXqRFHA2QxHV9g4X3GtTFKuzSqk2xk11WS8/1Gg==
->>>>>>> 0659b47... Update Axios
   dependencies:
     axios "^0.21.1"
     form-data "^3.0.0"

@@ -75,6 +75,37 @@ yarn jest src/__tests__ --setupFiles dotenv/config
 yarn jest src/__tests__/example.test.ts --setupFiles dotenv/config
 ```
 
+### Running only specific tests with Github Actions
+
+There is a field named `Test map` which is generaly empty and that means all tests will be run.
+
+ - To run just one test type in the field `FIXTURE_NAME` of the test <b>---></b>  `_Example_`
+ - To run two or more tests, but not all, type there all `FIXTURE_NAME`s seperating them with `|` <b>---></b> `_Example_|_Example2_|_Example3_`
+
+ If you want to define default list of tests to always appear in the field `Test map`, edit the .yml file you are using at `on > workflow_dispatch > inputs > testList > default`:
+
+ ```yml
+on:
+    workflow_dispatch:
+        inputs:
+            testList:
+                description: 'List of tests to run'
+                required: false
+                default: #here -> '_Example_|_Example2_|_Example3_'
+ ```
+
+So it should look like this: 
+
+ ```yml
+on:
+    workflow_dispatch:
+        inputs:
+            testList:
+                description: 'List of tests to run'
+                required: false
+                default: '_Example_|_Example2_|_Example3_'
+ ```
+
 ### Example of Test
 
 #### Create Test
