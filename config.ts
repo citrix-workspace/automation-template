@@ -13,7 +13,7 @@ export const config = {
     citrixCloudCustomerId: process.env.CONFIG_CUSTOMER_ID ? `${process.env.CONFIG_CUSTOMER_ID}` : '',
     citrixCloudClientId: process.env.CONFIG_CLIENT_ID ? `${process.env.CONFIG_CLIENT_ID}` : '',
     citrixCloudClientSecret: process.env.CONFIG_CLIENT_SECRET ? `${process.env.CONFIG_CLIENT_SECRET}` : '',
-    microappsAdminUrl: ``,
+    microappsAdminUrl: process.env.CONFIG_MICROAPPS_ADMIN_URL ? `${process.env.CONFIG_MICROAPPS_ADMIN_URL}` : '',
     loggerFilter: `.${process.env.CONFIG_BUILDER_URL}(.*)initiator_type=BUTTON`,
     defaultTimeout: 90000,
     shouldConfigureIntegrations: false,
