@@ -38,9 +38,8 @@ export const setupIntgration = async () => {
         microappsAdminUrl,
         pathToFile,
     });
-    console.log(response.data);
     const integrationId = response.data.id;
-    console.log(integrationId);
+    console.log('integrationId: ',integrationId);
 
     await microappsAdmin.updateintegrationConfiguration({
         authInstance,
