@@ -33,13 +33,14 @@ export const setupIntgration = async () => {
         await microappsAdmin.deleteIntegration({ authInstance, microappsAdminUrl, integrationId: res });
     }
 
-    const response: any = await microappsAdmin.importIntegration({
+    const response = await microappsAdmin.importIntegration({
         authInstance,
         microappsAdminUrl,
         pathToFile,
     });
     const integrationId = response.data.id;
-    console.log('integrationId: ',integrationId);
+    
+    console.log('integrationId: ', integrationId);
 
     await microappsAdmin.updateintegrationConfiguration({
         authInstance,
@@ -51,11 +52,11 @@ export const setupIntgration = async () => {
     await microappsAdmin.addSecrets({ authInstance, microappsAdminUrl, integrationId, data: secrets });
     const appsRespnonse = await microappsAdmin.getApps({ authInstance, microappsAdminUrl });
     const appsData = appsRespnonse.data;
-    const apps = appsData.filter((e: any) => e.app.serviceId === integrationId);
+    const apps = appsData.filter((e: { app: { serviceId: string } }) => e.app.serviceId === integrationId);
 
     let appsIds: any = [];
 
-    apps.forEach((e: any) => appsIds.push(e.id));
+    apps.forEach((e: { id: string; }) => appsIds.push(e.id));
 
     for (const appId of appsIds) {
         await microappsAdmin.checkAppMissconfigurations({ authInstance, microappsAdminUrl, appId });
