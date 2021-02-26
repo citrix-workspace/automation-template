@@ -35,6 +35,11 @@ jobs:
             - name: Install dependencies
               run: yarn install  --frozen-lockfile
 
+            - name: Export secrets
+              run: |
+                  echo "VARIABLE=$({ secrets.SECRET})" >> $GITHUB_ENV;
+              shell: bash
+
             - name: Run tests
               run: |
                   echo "startDate=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
