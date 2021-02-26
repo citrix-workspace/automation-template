@@ -4,37 +4,22 @@
 
 Share boilerplate code and directory structure across the projects
 
-## Folder Structure
+[Related projects we use](##Related-projects-we-use)
 
-After creation, your project should look like this:
+[Getting Started](##Getting-Started)
 
-```
-automation-template/
-  artifacts/
-  node_modules/
-  README.md
-  .prettierrc
-  .gitignore
-  config.ts
-  init.ts
-  jest.config.js
-  jest.setup.js
-  package.json
-  README.md
-  tsconfig.json
-  src/
-    data/
-        matrix.js
-    __tests__/
-        approveEntityFromBlade.test.ts
-        approveEntityFromFeedCard.test.ts
-        createEntity.test.ts
-        example.test.ts
-    helpers/
-        setupIntegration.ts
-    types/
-        init.ts
-```
+[Github Actions](##Github-Actions)
+
+[Citrix Cloud API Access](##Citrix-Cloud-API-Access)
+
+[Setup Integrations](##Setup-Integrations)
+
+[Generic Tests](##Generic-Tests)
+
+[Test Examples](##Test-Examples)
+
+[Best Practices](##Best-Practices)
+
 ## Related projects we use
 
 -   [TypeScript](https://www.typescriptlang.org/docs)
@@ -50,19 +35,24 @@ automation-template/
 ```bash
 yarn
 ```
+
 ##### How to handle local secrets
 
 To be able to load your env variables, you can create your own config:
+
 ```
 touch .env
 ```
 
 Example of .env
+
 ```
 CONFIG_WORKSPACE_USERNAME=jon@doe.com
 CONFIG_WORKSPACE_PASSWORD-myP@ssword1
 ```
-:warning: Don`t commit .env file into repository - you can add .env to .gitignore and now you can run yor test 
+
+:warning: Don`t commit .env file into repository - you can add .env to .gitignore and now you can run yor test
+
 #### Running All Tests locally
 
 ```bash
@@ -75,40 +65,335 @@ yarn jest src/__tests__ --setupFiles dotenv/config
 yarn jest src/__tests__/example.test.ts --setupFiles dotenv/config
 ```
 
+## Github Actions
+
+[Setting up workflow before first use](###Setting-up-workflow-before-first-use)
+
+[Setting up your own workflow](###Setting-up-your-own-workflow)
+
+[Running only specific tests with Github Actions](###Running-only-specific-tests-with-Github-Actions)
+
+Github Actions is used for running tests in workflow. Workflow file is located in `.github/workflows` where is `e2e-tests.yml`
+
+In the `e2e-tests.yml` workflow are basic steps which includes:
+
+-   Seting up the pipeline and installing all dependencies
+-   Exporting secrets
+-   Running tests
+-   Uploading artifacts (screenshots, logs)
+-   Sending notifications to Slack
+-   Sending report to PowerBI
+
+### Setting up workflow before first use
+
+To be able to successfully use the workflow, you need to set it up first.
+
+Exporting Github Secrets
+
+-   For each Github Secret you want to use in your tests, the secret needs to be exported.
+-   The secret is exported by adding this line
+
+    ```yml
+    echo 'VARIABLE=$({ secrets.SECRET })' >> $GITHUB_ENV;
+    ```
+
+    in Export secrets step under run command, where you put instead:
+
+    1. `VARIABLE` -> variable name, which you are using/will be using in tests
+    2. `SECRETS` -> secret name under which is secret stored in Github Secrets
+
+-   After exporting all needed secrets the step should look like this
+
+    ```yml
+    - name: Export secrets
+      run: |
+          echo 'VARIABLE1=$({ secrets.SECRET1 })' >> $GITHUB_ENV;
+          echo 'VARIABLE2=$({ secrets.SECRET2 })' >> $GITHUB_ENV;
+          echo 'VARIABLE3=$({ secrets.SECRET3 })' >> $GITHUB_ENV;
+          echo 'VARIABLE4=$({ secrets.SECRET4 })' >> $GITHUB_ENV;
+      shell: bash
+    ```
+
+    There is already a one export line, how the export of a Github Secret should look like. You can use it as a template and delete it after
+
+### Setting up your own workflow
+
+[Slack Notification](####Slack-Notifications)
+
+[Sending report to PowerBI](####Sending-report-to-PowerBI)
+
+For better understanding how to setup workflow please go to [Github documentation for Github Actions](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions), but it is advised to use/copy the predefined workflow.
+
+#### Slack Notification
+
+The step for sending Slack Notification should have format like this
+
+```yml
+- name: Send Notification to Slack
+  uses: rtCamp/action-slack-notify@master
+  env:
+      SLACK_CHANNEL: wsi-factory-test-results
+      SLACK_COLOR: '#80FF33'
+      SLACK_TITLE: Test status
+      SLACK_MESSAGE: ':success-icon: *Repository:* ${{ github.event.repository.name}}  *Result:* ${{ job.status }} :success-icon:'
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      MSG_MINIMAL: false
+```
+
+If you want to make different notifications for successful and failed run, make 2 of these steps but for the failure one add this line between the `name` and `uses`
+
+```yml
+if: ${{ failure() }}
+```
+
+The env params:
+
+1.  `SLACK_CHANNEL` - Channel where the notification will be sent
+2.  `SLACK_COLOR` - Color in HEX which will determine the side line color of the notification
+3.  `SLACK_TITLE` - Title of the notification
+4.  `SLACK_MESSAGE` - Text that will be sent with the notification
+5.  `SLACK_WEBHOOK` - A webhook needed for connection to the slack
+
+![SlackNotification](documentation/slackNotification.png)
+
+#### Sending report to PowerBI
+
+The step for sending report to PowerBI should look like this
+
+```yml
+- name: Send Report to Power BI
+  if: always()
+  run: |
+      echo $startDate
+      export serverVersionrTest=$(curl -k -s https:///hotsvcnv6xdz.us.iws.cloud.com/status/up | jq -r '.version')
+      echo $serverVersionrTest
+      export runNumber="${{ github.run_number }}"
+      export workflowName="${{ github.workflow }}"
+      export repositoryName="${{ github.event.repository.name}}"
+      export endDate=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+      cat artifacts/report.json | jq  -r --arg buildID "$runNumber" --arg jobName "$workflowName" --arg integrationName "$repositoryName" --arg startTime "$startDate" --arg endTime "$endDate" --arg serverVersionrTest "$serverVersionrTest" \
+          '[{ 
+          "buildID":($buildID)|tonumber,
+          "startTime":$startTime,
+          "customerIDCC":"hotsvcnv6xdz",
+          "versionMAServer":$serverVersionrTest,
+          "integrationName":$integrationName,
+          "passed":.numPassedTests,
+          "failed":.numFailedTests,
+          "skipped":.numPendingTests,
+          "total":.numTotalTests,
+          "endTime":$endTime,
+          "jobName":$jobName,
+          }]' > report_power_bi.json
+      cat report_power_bi.json
+      curl --include \
+          --request POST \
+          --header "Content-Type: application/json" \
+          --data-binary @report_power_bi.json \
+          "${{ secrets.POWER_BI_API_KEY }}"
+
+  shell: bash
+```
+
+It takes values from report.json file in artifacts generated by the end of test runs + values from github workflow and sends it to the PowerBI dependant on which `POWER_BI_API_KEY` is assigned
+
+If the report patern doesnt match the patern in your PowerBI report, you must change it based on your PowerBI pattern here:
+
+```yml
+'[{
+"buildID":($buildID)|tonumber,
+"startTime":$startTime,
+"customerIDCC":"hotsvcnv6xdz",
+"versionMAServer":$serverVersionrTest,
+"integrationName":$integrationName,
+"passed":.numPassedTests,
+"failed":.numFailedTests,
+"skipped":.numPendingTests,
+"total":.numTotalTests,
+"endTime":$endTime,
+"jobName":$jobName,
+}]'
+```
+
 ### Running only specific tests with Github Actions
 
 There is a field named `Test map` which is generaly empty and that means all tests will be run.
 
- - To run just one test type in the field `FIXTURE_NAME` of the test <b>---></b>  `_Example_`
- - To run two or more tests, but not all, type there all `FIXTURE_NAME`s seperating them with `|` <b>---></b> `_Example_|_Example2_|_Example3_`
+-   To run just one test type in the field `FIXTURE_NAME` of the test <b>---></b> `_Example_`
+-   To run two or more tests, but not all, type there all `FIXTURE_NAME`s seperating them with `|` <b>---></b> `_Example_|_Example2_|_Example3_`
 
- If you want to define default list of tests to always appear in the field `Test map`, edit the .yml file you are using at `on > workflow_dispatch > inputs > testList > default`:
+If you want to define default list of tests to always appear in the field `Test map`, edit the .yml file you are using at `on > workflow_dispatch > inputs > testList > default`:
 
- ```yml
+```yml
 on:
     workflow_dispatch:
         inputs:
             testList:
-                description: 'List of tests to run'
+                description: 'Test map'
                 required: false
                 default: #here -> '_Example_|_Example2_|_Example3_'
- ```
+```
 
-So it should look like this: 
+So it should look like this:
 
- ```yml
+```yml
 on:
     workflow_dispatch:
         inputs:
             testList:
-                description: 'List of tests to run'
+                description: 'Test map'
                 required: false
                 default: '_Example_|_Example2_|_Example3_'
- ```
+```
 
-### Example of Test
+## Citrix Cloud API Access
 
-#### Create Test
+To be able to use Citrix Cloud and Microapps Admin APIs, you need to get Client ID, Client Secret, Customer ID and cwaAPI
+
+-   After logging in with user that will be used by tests to Citrx Cloud, open menu on the upper left hand side and go to Identity and Access Management
+
+![IdentityAndAccessManagement](documentation/I&AManagement.png)
+
+-   Go to API Access page, put some name and click on <b>Create Client</b>
+
+![CreateClient](documentation/createClient.png)
+
+1. Client ID and Client Secret
+
+    - Right after clicking on <b>Create Client</b>, Client ID and Client Secret will be shown. You can copy both or download them in .csv file by clicking on download. This is only chance to copy the Client Secret
+
+2. Customer ID
+
+    - Can be found in the text over the <b>Create Client</b> space.
+
+    ![CustomerID](documentation/customerID.png)
+
+3. cwaAPI
+
+    - If the Customer, where tests will be run, is in STAGE
+        - `cwaAPI` = ctxwsstgapi
+    - If the Customer, where tests will be run, is in PROD
+        - `cwaAPI` = citrixworkspacesapi
+
+-   After getting all neccessary values you can get Bearer token and create Authentication instance by using the functions in Citrix Cloud class from Microapp Automation Helper package.
+
+    ```ts
+    let bearerToken: string;
+    let authInstance: string;
+
+    const { customerId, cwaAPI, clientId, clientSecret } = config;
+
+    bearerToken = await citrixCloud.getCCBearerToken({
+        cwaAPI,
+        citrixCloudCustomerId: customerId,
+        citrixCloudClientId: clientId,
+        citrixCloudClientSecret: clientSecret,
+    });
+
+    authInstance = await citrixCloud.createAuthInstance({ bearerToken });
+    ```
+
+## Setup Integrations
+
+[How to get Integration Configuration payload](###How-to-get-Integration-Configuration-payload)
+
+[How to get Secrets payload](###How-to-get-Secrets-payload)
+
+[Matrix](###Matrix)
+
+The setupIntegration in `setupIntegrations.ts` file is for creating new integration in Microapps Admin
+
+For successfully setting up new Integrations with the script you will need:
+
+1. Get integration configuration payload
+2. Get secrets payload
+3. Setup Matrix
+
+### How to get Integration Configuration payload
+
+To get the payload, you will need to create the integration manually.
+
+1. Go to Microapps Admin
+2. Start setting up your integration and enter all missing data (credentials, url, etc.)
+3. Open developer tools and go to Network page
+4. Click save to complete the integration setup
+5. After that in the network developer tools requests should start to pop up. Requests named with just a number, secrets, external-services and synchronization for example.
+
+![Network](documentation/network.png)
+
+6. You will need one of the number named requests and the one you will need is request with Request Method PUT
+
+![RequestMethod](documentation/requestMethod.png)
+
+After you find the right request, scroll down until there is Request Payload
+
+![RequestPayload](documentation/requestPayload.png)
+
+Click on view source and there you have the entire payload ready for copy
+
+### How to get Secrets payload
+
+_You can skip steps 1-5 if you were getting integration configuration payload and you can find the secrets request_
+
+1. Go to Microapps Admin
+2. Start setting up your integration and enter all missing data (credentials, url, etc.)
+3. Open developer tools and go to Network page
+4. Click save to complete the integration setup
+5. After that in the network developer tools requests should start to pop up. Requests named with just a number, secrets, external-services and synchronization for example.
+
+![NetworkScreenshot](documentation/network.png)
+
+6. You will need the Secrets named request
+
+![SecretsRequest](documentation/secretsRequest.png)
+
+After you find the right request, scroll down until there is Request Payload
+
+![SecretsPayload](documentation/secretsPayload.png)
+
+Click on view source and there you have the entire payload ready for copy
+
+### Matrix
+
+You will need to seup a matrix in `src/data/matrix.js` file.
+There is already a pre-defined one, you just need to enter missing data.
+
+1. name - Name of the integration
+2. pathToFile - Copy a name of imported integration .mapp file and replace the \*\*
+3. configuration - Copy the integration configuration payload and paste it here
+4. secrets - Copy the secrets payload and paste it here. Replace the values with values that will be taken from Github Secrets
+5. microapps - This is place for all microapps the integration has. Few examples are in the base matrix already, so you will need to just replace the microapps1/microapps2 with the real name of Microapp and inside the subscribers array add real test user's emails
+
+## Generic Tests
+
+Generic tests are checking if Integrations in Microapps Admin are ready for testing.
+
+There are 2 generic tests:
+
+1. genericMisconfigurationIntegration
+
+    - Gets all Integrations and its Microapps that are on the Environment
+    - Searches in their configs if everything is alright
+    - Creates a report in a JSON file
+    - If at least one Integration is misconfigured, the test will fail
+
+2. genericSynchronization
+    - Gets all Integrations that are on the Environment
+    - Filters out those which are misconfigured
+    - On the rest tries to start Incremental Synchronization and then Full Synchronization
+    - Creates a report in a JSON file
+    - If at least one Integration has one failing synchornization, the test will fail
+
+You can run both tests by running the `generic-tests.yml` workflow.
+Also by running the workflow, both JSON reports will be put in one and sent to PowerBI dashboard
+
+## Test Examples
+
+[Create Test](###Create-Test)
+
+[Update Test](###Update-Test)
+
+### Create Test
 
 ```ts
 // Class for APIs accessing the System of Record (eg. salesforceAPI)
@@ -190,7 +475,7 @@ describe(FIXTURE_NAME, ('_Create record_') => {
 });
 ```
 
-#### Update Test
+### Update Test
 
 ```ts
 // Class for APIs accessing the System of Record (eg. salesforceAPI)
@@ -299,23 +584,17 @@ describe(FIXTURE_NAME, ('_Update record_') => {
 });
 ```
 
-### Example for creating authorization instance for Citrix Cloud
+## Best Practices
 
-```ts
-let bearerToken: string;
-let authInstance: string;
+[Examples for working with Workspace contents](###Examples-for-working-with-Workspace-contents)
 
-const { customerId, cwaAPI, clientId, clientSecret } = config;
+[Examples for working with Blade contents](###Examples-for-working-with-Blade-contents)
 
-bearerToken = await citrixCloud.getCCBearerToken({
-    cwaAPI,
-    citrixCloudCustomerId: customerId,
-    citrixCloudClientId: clientId,
-    citrixCloudClientSecret: clientSecret,
-});
+[Examples for working with FeedCard contents](###Examples-for-working-with-FeedCard-contents)
 
-authInstance = await citrixCloud.createAuthInstance({ bearerToken });
-```
+[Example of screenshot comparation](###Example-of-screenshot-comparation)
+
+[Examples of how to not use waitForTimeout](###Examples-of-how-to-not-use-waitForTimeout)
 
 ### Examples for working with Workspace contents
 
@@ -336,7 +615,7 @@ await page.selectOption(selector, value);
 
 const selectValue: any = await page.$(selector);
 
-expect(await selectValue.evaluate((element: any) => element.value)).toEqual(value);
+expect(await selectValue.evaluate((element: HTMLSelectElement) => element.value)).toEqual(value);
 ```
 
 #### Using Look-Up component
@@ -363,9 +642,7 @@ await page.waitForSelector('footer button:not([disabled])');
 #### Rewrite already filled text label
 
 ```ts
-await page.evaluate(
-    () => ((<HTMLInputElement>document.querySelectorAll('[data-testid="integration-name"]')[0]).value = '')
-);
+await page.fill('[data-testid="integration-name"]', '');
 await page.type('[data-testid="integration-name"]', integrationName);
 ```
 
@@ -391,15 +668,12 @@ await button[0].click();
 
 ### Example of screenshot comparation
 
-For screenshot testing we are using tool Jest Image Snapshot 
+For screenshot testing we are using tool Jest Image Snapshot
 This tool is comapring actual state of a page or page component with saved image
 During the first run the benchmark image is created. This image has to be check if the UI is in demanded state
 
 ```ts
-
 describe(FIXTURE_NAME, () => {
-
-
     it(FIXTURE_NAME, async ({ context, page }) => {
         const testIdentificator = getTestId();
         console.log(testIdentificator);
@@ -430,7 +704,7 @@ describe(FIXTURE_NAME, () => {
 
         await step(context)('Compare screenshots', async () => {
             //take a screenshot
-            const screenshot = await page.screenshot()
+            const screenshot = await page.screenshot();
             expect.extend({ toMatchImageSnapshot });
             expect(screenshot).toMatchImageSnapshot();
         });
@@ -438,8 +712,41 @@ describe(FIXTURE_NAME, () => {
 });
 ```
 
+### Examples of how to wait for some Element to appear
 
-[typescript]: https://www.typescriptlang.org/
-[prettier]: https://prettier.io/
-[jest]: https://jestjs.io/
-[playwright]: https://[playwright.dev]
+Using waitForTimeout function only leads to unstability of test so you should never use this approach:
+
+```ts
+await page.click('button');
+
+await page.waitForTimeout(5000);
+
+await page.click('button2');
+```
+
+The test will wait everytime and only 5 seconds until it will try to find the `button2` selector. If the loading of the button will take more then 5 seconds, the `await page.click('button2');` would not find the particular selector and the test would fail. If the `button2` would appear sooner, the test would still wait until the 5 seconds would pass, so this apporach isn't efficient and can also make the test unstable. 
+
+When test should wait for content to load, you can use either:
+
+1. page.waitForResponse function, when you find suitable request to wait for to finish
+
+    ```ts
+    await page.click('button');
+
+    await page.waitForResponse(
+        (response: { url: () => string; status: () => number }) =>
+            response.url().includes('{requestUrl') && response.status() === 200
+    );
+
+    await page.click('button2');
+    ```
+
+2. page.waitForSelector function, when you find suitable selector to wait for until it is vissible
+
+    ```ts
+    await page.click('button');
+
+    await page.waitForSelector('selector');
+
+    await page.click('button2');
+    ```
