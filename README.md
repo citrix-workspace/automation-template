@@ -594,7 +594,7 @@ describe(FIXTURE_NAME, ('_Update record_') => {
 
 [Example of screenshot comparation](###Example-of-screenshot-comparation)
 
-[Examples of how to not use waitForTimeout](###Examples-of-how-to-not-use-waitForTimeout)
+[Examples of how to wait for some Element to appear](###Examples-of-how-to-wait-for-some-Element-to-appear)
 
 ### Examples for working with Workspace contents
 
