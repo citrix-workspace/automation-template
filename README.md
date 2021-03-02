@@ -1,8 +1,10 @@
-# automation-template
+# Automation template [![GitHub license](https://img.shields.io/badge/license-ISC-green.svg)](https://github.com/citrix-workspace/automation-template/blob/master/LICENSE)
+
+ Automation template contains boilerplate code and directory structure and together with the [microapps-automation-helper](https://www.npmjs.com/package/) should help you to write automated tests for your [Microapps](https://docs.citrix.com/en-us/citrix-microapps.html) with minimum configuration.
+
 
 ## About this project
 
-Share boilerplate code and directory structure across the projects
 
 [Related projects we use](##Related-projects-we-use)
 
@@ -478,9 +480,12 @@ describe(FIXTURE_NAME, ('_Create record_') => {
 ### Update Test
 
 ```ts
+import { Workspace, MicroappsAdmin } from "microapps-automation-helper";
+
 // Class for APIs accessing the System of Record (eg. salesforceAPI)
 const sorAPI = new sorAPI();
 const workspace = new Workspace();
+const microappsAdmin = new MicroappsAdmin()
 
 const { workspaceUrl, identityProvider, customerId, cwaAPI, clientId, clientSecret, builderUrl } = config;
 
