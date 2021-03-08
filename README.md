@@ -6,21 +6,21 @@
 ## About this project
 
 
-[Related projects we use](##Related-projects-we-use)
+[Related projects we use](#related-projects-we-use)
 
-[Getting Started](##Getting-Started)
+[Getting Started](#getting-Started)
 
-[Github Actions](##Github-Actions)
+[Github Actions](#github-Actions)
 
-[Citrix Cloud API Access](##Citrix-Cloud-API-Access)
+[Citrix Cloud API Access](#citrix-cloud-api-access)
 
-[Setup Integrations](##Setup-Integrations)
+[Setup Integrations](#setup-integrations)
 
-[Generic Tests](##Generic-Tests)
+[Generic Tests](#generic-tests)
 
-[Test Examples](##Test-Examples)
+[Test Examples](#test-examples)
 
-[Best Practices](##Best-Practices)
+[Best Practices](#best-practices)
 
 ## Related projects we use
 
@@ -69,11 +69,11 @@ yarn jest src/__tests__/example.test.ts --setupFiles dotenv/config
 
 ## Github Actions
 
-[Setting up workflow before first use](###Setting-up-workflow-before-first-use)
+[Setting up workflow before first use](#setting-up-workflow-before-first-use)
 
-[Setting up your own workflow](###Setting-up-your-own-workflow)
+[Setting up your own workflow](#setting-up-your-own-workflow)
 
-[Running only specific tests with Github Actions](###Running-only-specific-tests-with-Github-Actions)
+[Running only specific tests with Github Actions](#running-only-specific-tests-with-github-actions)
 
 Github Actions is used for running tests in workflow. Workflow file is located in `.github/workflows` where is `e2e-tests.yml`
 
@@ -120,9 +120,9 @@ Exporting Github Secrets
 
 ### Setting up your own workflow
 
-[Slack Notification](####Slack-Notifications)
+[Slack Notification](#slack-notifications)
 
-[Sending report to PowerBI](####Sending-report-to-PowerBI)
+[Sending report to PowerBI](#sending-report-to-powerbi)
 
 For better understanding how to setup workflow please go to [Github documentation for Github Actions](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions), but it is advised to use/copy the predefined workflow.
 
@@ -297,11 +297,13 @@ To be able to use Citrix Cloud and Microapps Admin APIs, you need to get Client 
 
 ## Setup Integrations
 
-[How to get Integration Configuration payload](###How-to-get-Integration-Configuration-payload)
+[How to get Integration Configuration payload](#how-to-get-integration-configuration-payload)
 
-[How to get Secrets payload](###How-to-get-Secrets-payload)
+[How to get Secrets payload](#how-to-get-secrets-payload)
 
-[Matrix](###Matrix)
+[Matrix](#matrix)
+
+[Running the script](#running-the-script)
 
 The setupIntegration in `setupIntegrations.ts` file is for creating new integration in Microapps Admin
 
@@ -366,6 +368,13 @@ There is already a pre-defined one, you just need to enter missing data.
 4. secrets - Copy the secrets payload and paste it here. Replace the values with values that will be taken from Github Secrets
 5. microapps - This is place for all microapps the integration has. Few examples are in the base matrix already, so you will need to just replace the microapps1/microapps2 with the real name of Microapp and inside the subscribers array add real test user's emails
 
+### Running the script
+
+When everything is ready, the script won't run until the `shouldConfigureIntegrations` value in `config.ts` file will be set to `true`.
+
+- When `shouldConfigureIntegrations` is set to `true`, a new integration will be created before every run of a workflow or even when you run just one test localy
+- If you don't want this to happen, set `shouldConfigureIntegrations` as `false` <i>(recommended while in development of a new code)</i>
+
 ## Generic Tests
 
 Generic tests are checking if Integrations in Microapps Admin are ready for testing.
@@ -391,9 +400,9 @@ Also by running the workflow, both JSON reports will be put in one and sent to P
 
 ## Test Examples
 
-[Create Test](###Create-Test)
+[Create Test](#create-test)
 
-[Update Test](###Update-Test)
+[Update Test](#update-test)
 
 ### Create Test
 
@@ -591,15 +600,17 @@ describe(FIXTURE_NAME, ('_Update record_') => {
 
 ## Best Practices
 
-[Examples for working with Workspace contents](###Examples-for-working-with-Workspace-contents)
+[Examples for working with Workspace contents](#examples-for-working-with-workspace-contents)
 
-[Examples for working with Blade contents](###Examples-for-working-with-Blade-contents)
+[Examples for working with Blade contents](#examples-for-working-with-blade-contents)
 
-[Examples for working with FeedCard contents](###Examples-for-working-with-FeedCard-contents)
+[Examples for working with FeedCard contents](#examples-for-working-with-feedCard-contents)
 
-[Example of screenshot comparation](###Example-of-screenshot-comparation)
+[Example of screenshot comparation](#example-of-screenshot-comparation)
 
-[Examples of how to wait for some Element to appear](###Examples-of-how-to-wait-for-some-Element-to-appear)
+[Example of starting an Integration Synchronization](#example-of-starting-an-integration-synchronization)
+
+[Examples of how to wait for some Element to appear](#examples-of-how-to-wait-for-some-element-to-appear)
 
 ### Examples for working with Workspace contents
 
@@ -716,6 +727,20 @@ describe(FIXTURE_NAME, () => {
     });
 });
 ```
+
+### Example of starting an Integration Synchronization
+
+To start Synchronization, you need to run `runSynchronization()` function from `microappsAdmin` class from `microapps-automation-helper` package. Function description can be found [here](https://github.com/citrix-workspace/microapps-automation-helper/blob/master/API-REFERENCE.md)
+
+```ts
+import { MicroappsAdmin } from 'microapps-automation-helper';
+
+const microappsAdmin = new MicroappsAdmin();
+
+await microappsAdmin.runSynchronization({ authInstance, microappsAdminUrl, integrationName, synchronizationType, };
+```
+
+The function will start the synchronization and will wait until the synchronization is complete. It will throw error, if the synchronization wouldn't finish.
 
 ### Examples of how to wait for some Element to appear
 
