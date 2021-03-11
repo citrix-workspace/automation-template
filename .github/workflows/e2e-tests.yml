@@ -78,7 +78,8 @@ jobs:
               if: always()
               run: |
                   echo $startDate
-                  export serverVersionrTest=$(curl -k -s https:///hotsvcnv6xdz.us.iws.cloud.com/status/up | jq -r '.version')
+                  export "customerID=${{ secrets.CONFIG_CUSTOMER_ID }}" >> $GITHUB_ENV
+                  export serverVersionrTest=$(curl -k -s https:///$customerID.us.iws.cloud.com/status/up | jq -r '.version')
                   echo $serverVersionrTest
                   export runNumber="${{ github.run_number }}"
                   export workflowName="${{ github.workflow }}"
@@ -88,7 +89,7 @@ jobs:
                       '[{ 
                       "buildID":($buildID)|tonumber,
                       "startTime":$startTime,
-                      "customerIDCC":"hotsvcnv6xdz",
+                      "customerIDCC":$customerID,
                       "versionMAServer":$serverVersionrTest,
                       "integrationName":$integrationName,
                       "passed":.numPassedTests,
