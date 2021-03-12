@@ -212,7 +212,7 @@ If the report patern doesnt match the patern in your PowerBI report, you must ch
 '[{
 "buildID":($buildID)|tonumber,
 "startTime":$startTime,
-"customerIDCC":"hotsvcnv6xdz",
+"customerIDCC":$customerID,
 "versionMAServer":$serverVersionrTest,
 "integrationName":$integrationName,
 "passed":.numPassedTests,
