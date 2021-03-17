@@ -1,7 +1,6 @@
 name: Multiple environments
 
 on:
-  push:  
     workflow_dispatch:
         inputs:
             envs:
