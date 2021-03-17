@@ -1,12 +1,13 @@
 name: Multiple environments
 
-on:  
-  workflow_dispatch:
-      inputs:
-          envs:
-            description: 'Environment'
-            required: false
-            default: [DEV, QA, PROD]
+on:
+  push:  
+    workflow_dispatch:
+        inputs:
+            envs:
+              description: 'Environment'
+              required: true
+              default: [DEV, QA, PROD]
 
 jobs:
   test:
