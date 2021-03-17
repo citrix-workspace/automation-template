@@ -1,4 +1,5 @@
 name: Multiple environments
+on:
   workflow_dispatch:
     inputs:
         envs:
