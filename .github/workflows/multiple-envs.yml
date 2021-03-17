@@ -1,0 +1,23 @@
+name: Multiple environments
+  workflow_dispatch:
+    inputs:
+        envs:
+          description: 'Environment'
+          required: false
+          default: [DEV, QA, PROD]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        envs: ${{github.event.inputs.envs}}
+    
+    environment:
+      name: ${{ matrix.envs }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run a script
+        run: |
+          echo "Running on ${{ matrix.envs }}"
