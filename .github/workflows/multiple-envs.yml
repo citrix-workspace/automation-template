@@ -6,7 +6,7 @@ on:
           envs:
             description: 'Environment'
             required: true
-            default: [DEV, QA, PROD]
+            default: '[DEV, QA, PROD]'
 
 jobs:
   test:
