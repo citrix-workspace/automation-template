@@ -6,14 +6,14 @@ on:
       dev:
         description: "config DEV"
         required: true
-        default: 'DEV'
+        default: "DEV"
       qa:
         description: "config QA"
         required: true
-        default: 'QA'
+        default: "QA"
       prod:
         description: "config PROD"
-        required: rrue
+        required: true
         default: "PROD"
 
 jobs:
