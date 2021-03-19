@@ -1,25 +1,35 @@
-name: Multiple environments
+name: Multiple Envs
 
 on:
   workflow_dispatch:
-      inputs:
-          envs:
-            description: 'Environment'
-            required: true
-            default: '[DEV, QA, PROD]'
+    inputs:
+      dev:
+        description: "config DEV"
+        required: true
+        default: 'DEV'
+      qa:
+        description: "config QA"
+        required: true
+        default: 'QA'
+      prod:
+        description: "config PROD"
+        required: rrue
+        default: "PROD"
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        envs: ${{github.event.inputs.envs}}
-    
+        envs: ["${{github.event.inputs.dev}}", "${{github.event.inputs.qa}}", "${{github.event.inputs.prod}}"]
+        exclude:
+          - envs: ""
     environment:
       name: ${{ matrix.envs }}
+      
 
     steps:
       - uses: actions/checkout@v2
-      - name: Run a script
+      - name: Print environment name
         run: |
-          echo "Running on ${{ matrix.envs }}"
+          echo "Runs on ${{environment.name}}"
