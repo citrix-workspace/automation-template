@@ -1,3 +1,5 @@
+# This is a basic workflow to help you run your tests on multiple envs or customers.
+
 name: Multiple Envs
 
 on:
@@ -6,15 +8,15 @@ on:
       dev:
         description: "config DEV"
         required: true
-        default: "DEV"
+        default: "none"
       qa:
         description: "config QA"
         required: true
-        default: "QA"
+        default: "none"
       prod:
         description: "config PROD"
         required: true
-        default: "PROD"
+        default: "none"
 
 jobs:
   test:
@@ -23,7 +25,7 @@ jobs:
       matrix:
         envs: ${{github.event.inputs.*}}
         exclude:
-          - envs: ""
+          - envs: "none"
     environment:
       name: ${{ matrix.envs }}
       
