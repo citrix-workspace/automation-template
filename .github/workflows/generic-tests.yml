@@ -43,7 +43,7 @@ jobs:
             - name: Run tests
               run: |
                   echo "startDate=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV;
-                  yarn ci
+                  yarn genericTest
               shell: bash
 
             - name: Upload artifacts
