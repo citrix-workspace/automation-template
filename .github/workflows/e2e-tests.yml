@@ -43,7 +43,7 @@ jobs:
             - name: Run tests
               run: |
                   echo "startDate=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
-                  yarn jest -i --json --outputFile=artifacts/report.json --testNamePattern="${{github.event.inputs.testList}}"
+                  yarn jest -i --json --outputFile=artifacts/report.json --testNamePattern="${{github.event.inputs.testList}}" src/__tests__
               shell: bash
 
             - name: Upload artifacts
