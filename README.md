@@ -1,10 +1,8 @@
 # Automation template [![GitHub license](https://img.shields.io/badge/license-ISC-green.svg)](https://github.com/citrix-workspace/automation-template/blob/master/LICENSE)
 
- Automation template contains boilerplate code and directory structure and together with the [microapps-automation-helper](https://www.npmjs.com/package/) should help you to write automated tests for your [Microapps](https://docs.citrix.com/en-us/citrix-microapps.html) with minimum configuration.
-
+Automation template contains boilerplate code and directory structure and together with the [microapps-automation-helper](https://www.npmjs.com/package/) should help you to write automated tests for your [Microapps](https://docs.citrix.com/en-us/citrix-microapps.html) with minimum configuration.
 
 ## About this project
-
 
 [Related projects we use](#related-projects-we-use)
 
@@ -96,7 +94,7 @@ To be able to successfully use the workflow, you need to set it up first.
 -   The secret is exported by adding this line
 
     ```yml
-    echo 'VARIABLE=$({ secrets.SECRET })' >> $GITHUB_ENV;
+    echo 'VARIABLE=${{ secrets.SECRET }}' >> $GITHUB_ENV;
     ```
 
     in Export secrets step under run command, where you put instead:
@@ -109,10 +107,10 @@ To be able to successfully use the workflow, you need to set it up first.
     ```yml
     - name: Export secrets
       run: |
-          echo 'VARIABLE1=$({ secrets.SECRET1 })' >> $GITHUB_ENV;
-          echo 'VARIABLE2=$({ secrets.SECRET2 })' >> $GITHUB_ENV;
-          echo 'VARIABLE3=$({ secrets.SECRET3 })' >> $GITHUB_ENV;
-          echo 'VARIABLE4=$({ secrets.SECRET4 })' >> $GITHUB_ENV;
+          echo 'VARIABLE1=${{ secrets.SECRET1 }}' >> $GITHUB_ENV;
+          echo 'VARIABLE2=${{ secrets.SECRET2 }}' >> $GITHUB_ENV;
+          echo 'VARIABLE3=${{ secrets.SECRET3 }}' >> $GITHUB_ENV;
+          echo 'VARIABLE4=${{ secrets.SECRET4 }}' >> $GITHUB_ENV;
       shell: bash
     ```
 
@@ -379,8 +377,8 @@ There is already a pre-defined one, you just need to enter missing data.
 
 When everything is ready, the script won't run until the `shouldConfigureIntegrations` value in `config.ts` file will be set to `true`.
 
-- When `shouldConfigureIntegrations` is set to `true`, a new integration will be created before every run of a workflow or even when you run just one test localy
-- If you don't want this to happen, set `shouldConfigureIntegrations` as `false` <i>(recommended while in development of a new code)</i>
+-   When `shouldConfigureIntegrations` is set to `true`, a new integration will be created before every run of a workflow or even when you run just one test localy
+-   If you don't want this to happen, set `shouldConfigureIntegrations` as `false` <i>(recommended while in development of a new code)</i>
 
 ## Generic Tests
 
@@ -761,7 +759,7 @@ await page.waitForTimeout(5000);
 await page.click('button2');
 ```
 
-The test will wait everytime and only 5 seconds until it will try to find the `button2` selector. If the loading of the button will take more then 5 seconds, the `await page.click('button2');` would not find the particular selector and the test would fail. If the `button2` would appear sooner, the test would still wait until the 5 seconds would pass, so this apporach isn't efficient and can also make the test unstable. 
+The test will wait everytime and only 5 seconds until it will try to find the `button2` selector. If the loading of the button will take more then 5 seconds, the `await page.click('button2');` would not find the particular selector and the test would fail. If the `button2` would appear sooner, the test would still wait until the 5 seconds would pass, so this apporach isn't efficient and can also make the test unstable.
 
 When test should wait for content to load, you can use either:
 
