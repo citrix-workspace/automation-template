@@ -1,4 +1,4 @@
-name: e2e_test
+name: full_run
 
 on:
     # schedule:
