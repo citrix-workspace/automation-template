@@ -1,6 +1,7 @@
 import { config } from '../../config';
 import { CitrixCloud, MicroappsAdmin } from 'microapps-automation-helper';
 import matrix from '../data/matrix';
+import { createReport } from '../helpers/createReport';
 
 const { microappsAdminUrl, citrixCloudClientId, citrixCloudClientSecret, citrixCloudCustomerId, cwaAPI } = config;
 
@@ -15,6 +16,7 @@ const microappsAdmin = new MicroappsAdmin();
 let bearerToken: string;
 
 export const setupIntgration = async () => {
+    
     bearerToken = await citrixCloud.getCCBearerToken({
         cwaAPI,
         citrixCloudCustomerId,
@@ -23,6 +25,7 @@ export const setupIntgration = async () => {
     });
 
     const authInstance = await citrixCloud.createAuthInstance({ bearerToken });
+
     const res = await microappsAdmin.getStatusIntegration({
         authInstance,
         microappsAdminUrl,
@@ -39,7 +42,7 @@ export const setupIntgration = async () => {
         pathToFile,
     });
     const integrationId = response.data.id;
-    
+
     console.log('integrationId: ', integrationId);
 
     await microappsAdmin.updateintegrationConfiguration({
@@ -65,6 +68,10 @@ export const setupIntgration = async () => {
     await microappsAdmin.addSubscribers({ authInstance, integrationName, microappsAdminUrl, microapps, config });
 
     await microappsAdmin.getIntegration({ authInstance, microappsAdminUrl, integrationId });
+
+    const report = await microappsAdmin.checkIntegrationMissConfiguration({ authInstance, microappsAdminUrl, integrationId })
+        
+    createReport({ report, pathToFile: 'artifacts/setupReport.json' });
 
     await microappsAdmin.waitForSync({
         getIntegration: () => microappsAdmin.getIntegration({ authInstance, microappsAdminUrl, integrationId }),
