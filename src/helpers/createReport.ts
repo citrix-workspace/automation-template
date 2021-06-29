@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 interface CreateReport {
-    report: Array<Object>;
+    report: Array<Object> | Object;
     pathToFile: string;
 }
 
