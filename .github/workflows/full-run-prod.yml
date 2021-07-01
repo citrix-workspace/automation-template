@@ -1,4 +1,4 @@
-name: e2e_test
+name: full_run-PROD
 
 on:
     # schedule:
@@ -10,12 +10,10 @@ on:
                 description: 'Test map'
                 required: false
                 default:
-            logLevel:
-                description: 'Log level'
-                required: true
-                default: 'warning'
-            tags:
-                description: 'Test scenario tags'
+            runId:
+                description: 'Run ID - used for PowerBI reporting'
+                required: false
+                default:
 
 jobs:
     test:
@@ -37,13 +35,19 @@ jobs:
 
             - name: Export secrets
               run: |
-                  echo "VARIABLE=${{ secrets.SECRET}}" >> $GITHUB_ENV;
+
               shell: bash
 
             - name: Run tests
               run: |
                   echo "startDate=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
-                  yarn jest -i --json --outputFile=artifacts/report.json --testNamePattern="${{github.event.inputs.testList}}" src/__tests__
+                  yarn jest -i --json --outputFile=artifacts/report.json src/__tests__
+              shell: bash
+
+            - name: Merge Reports
+              if: always()
+              run: |
+                  node src/ci-scripts/mergeReports.js
               shell: bash
 
             - name: Upload artifacts
@@ -75,34 +79,18 @@ jobs:
                   MSG_MINIMAL: false
 
             - name: Send Report to Power BI
+              if: always()
               run: |
                   echo $startDate
                   export "customerID=${{ secrets.CONFIG_CUSTOMER_ID }}" >> $GITHUB_ENV
-                  export serverVersionrTest=$(curl -k -s https:///$customerID.us.iws.cloud.com/status/up | jq -r '.version')
-                  echo $serverVersionrTest
+                  export serverVersionTest=$(curl -k -s https:///$customerID.us.iws.cloud.com/status/up | jq -r '.version')
+                  echo $serverVersionTest
                   export runNumber="${{ github.run_number }}"
                   export workflowName="${{ github.workflow }}"
                   export repositoryName="${{ github.event.repository.name}}"
                   export endDate=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-                  cat artifacts/report.json | jq  -r --arg buildID "$runNumber" --arg jobName "$workflowName" --arg integrationName "$repositoryName" --arg startTime "$startDate" --arg endTime "$endDate" --arg serverVersionrTest "$serverVersionrTest" \
-                      '[{ 
-                      "buildID":($buildID)|tonumber,
-                      "startTime":$startTime,
-                      "customerIDCC":$customerID,
-                      "versionMAServer":$serverVersionrTest,
-                      "integrationName":$integrationName,
-                      "passed":.numPassedTests,
-                      "failed":.numFailedTests,
-                      "skipped":.numPendingTests,
-                      "total":.numTotalTests,
-                      "endTime":$endTime,
-                      "jobName":$jobName,
-                      }]' > report_power_bi.json
-                  cat report_power_bi.json
-                  curl --include \
-                      --request POST \
-                      --header "Content-Type: application/json" \
-                      --data-binary @report_power_bi.json \
-                      "${{ secrets.POWER_BI_API_KEY }}"
+                  export parentalRunId=${{ github.event.inputs.runId }}
+
+                  node fullrunReport.js --buildID="$runNumber" --startTime=$startTime --customerID=$customerID --serverVersionTest=$serverVersionTest --endTime=$endTime --jobName=$jobName --parentalRunId=$parentalRunId --powerBiApiKey="${{ secrets.POWER_BI_API_KEY }}"
 
               shell: bash
