@@ -71,6 +71,8 @@ yarn jest src/__tests__/example.test.ts --setupFiles dotenv/config
 
 [Setting up your own workflow](#setting-up-your-own-workflow)
 
+[Setting up workflows for Full Run](#setting-up-workflows-for-full-run)
+
 [Running only specific tests with Github Actions](#running-only-specific-tests-with-github-actions)
 
 Github Actions is used for running tests in workflow. Workflow file is located in `.github/workflows` where is `e2e-tests.yml`
@@ -221,6 +223,16 @@ If the report patern doesnt match the patern in your PowerBI report, you must ch
 "jobName":$jobName,
 }]'
 ```
+
+### Setting up workflows for Full Run
+
+These steps are for `full-run-prod.yml` and `full-run-stage.yml` workflows. They will be started automatically and will not need any other actions after the setup.
+
+These workflows are mandatory to be set up.
+
+-   You will need to add Prod and Stage environment secrets to you repository. For environment secrets please contact one of the contributors.
+
+-   In each of the workflows you will need to export secrets needed by the tests. Also you will need to export in `full-run-prod.yml` workflow secrets for PROD environment and in `full-run-stage.yml` workflow secrets for STAGE environment.
 
 ### Running only specific tests with Github Actions
 
