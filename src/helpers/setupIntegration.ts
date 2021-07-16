@@ -76,5 +76,6 @@ export const setupIntgration = async () => {
     await microappsAdmin.waitForSync({
         getIntegration: () => microappsAdmin.getIntegration({ authInstance, microappsAdminUrl, integrationId }),
         synchronizationType: 'FullSynchronization',
+        skipCheck: true
     });
 };
