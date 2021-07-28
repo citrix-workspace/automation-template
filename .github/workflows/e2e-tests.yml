@@ -84,7 +84,7 @@ jobs:
                   export workflowName="${{ github.workflow }}"
                   export repositoryName="${{ github.event.repository.name}}"
                   export endDate=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-                  cat artifacts/report.json | jq  -r --arg buildID "$runNumber" --arg jobName "$workflowName" --arg integrationName "$repositoryName" --arg startTime "$startDate" --arg endTime "$endDate" --arg serverVersionrTest "$serverVersionrTest" \
+                  cat artifacts/report.json | jq  -r --arg buildID "$runNumber" --arg jobName "$workflowName" --arg integrationName "$repositoryName" --arg startTime "$startDate" --arg endTime "$endDate" --arg serverVersionrTest "$serverVersionrTest" --arg customerID "$customerID" \
                       '[{ 
                       "buildID":($buildID)|tonumber,
                       "startTime":$startTime,
