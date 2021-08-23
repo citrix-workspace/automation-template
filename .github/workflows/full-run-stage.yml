@@ -17,6 +17,8 @@ on:
 
 jobs:
     test:
+        env:
+            secrets: '${{ toJSON(secrets) }}'
         runs-on: ubuntu-latest
 
         steps:
@@ -35,7 +37,7 @@ jobs:
 
             - name: Export secrets
               run: |
-
+                  export CONFIG_SECRETS=$secrets;
               shell: bash
 
             - name: Run tests
