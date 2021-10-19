@@ -16,7 +16,6 @@ const microappsAdmin = new MicroappsAdmin();
 let bearerToken: string;
 
 export const setupIntgration = async () => {
-    
     bearerToken = await citrixCloud.getCCBearerToken({
         cwaAPI,
         citrixCloudCustomerId,
@@ -59,7 +58,7 @@ export const setupIntgration = async () => {
 
     let appsIds: any = [];
 
-    apps.forEach((e: { id: string; }) => appsIds.push(e.id));
+    apps.forEach((e: { id: string }) => appsIds.push(e.id));
 
     for (const appId of appsIds) {
         await microappsAdmin.checkAppMissconfigurations({ authInstance, microappsAdminUrl, appId });
@@ -69,13 +68,17 @@ export const setupIntgration = async () => {
 
     await microappsAdmin.getIntegration({ authInstance, microappsAdminUrl, integrationId });
 
-    const report = await microappsAdmin.checkIntegrationMissConfiguration({ authInstance, microappsAdminUrl, integrationId })
-        
+    const report = await microappsAdmin.checkIntegrationMissConfiguration({
+        authInstance,
+        microappsAdminUrl,
+        integrationId,
+    });
+
     createReport({ report, pathToFile: 'artifacts/setupReport.json' });
 
     await microappsAdmin.waitForSync({
         getIntegration: () => microappsAdmin.getIntegration({ authInstance, microappsAdminUrl, integrationId }),
         synchronizationType: 'FullSynchronization',
-        skipCheck: true
+        skipCheck: true,
     });
 };
