@@ -629,11 +629,15 @@ describe(FIXTURE_NAME, ('_Update record_') => {
 
 [Examples of how to wait for some Element to appear](#examples-of-how-to-wait-for-some-element-to-appear)
 
+[Examples for Integration Platform](#examples-for-integration-platform)
+
 ### Examples for working with Workspace contents
 
 #### Click on Action in Actions in Workspace
 
 ```ts
+import { Workspace } from 'microapps-automation-helper';
+
 const workspace = new Workspace();
 
 await workspace.startAction({ page, actionName, integrationName });
@@ -706,13 +710,17 @@ This tool is comapring actual state of a page or page component with saved image
 During the first run the benchmark image is created. This image has to be check if the UI is in demanded state
 
 ```ts
+import { Workspace } from 'microapps-automation-helper';
+
+const workspace = new Workspace();
+
 describe(FIXTURE_NAME, () => {
     it(FIXTURE_NAME, async ({ context, page }) => {
         const testIdentificator = getTestId();
         console.log(testIdentificator);
 
         await step(context)('Login to Workspace', async () => {
-            await workspaceUi.login({
+            await workspace.login({
                 page,
                 workspaceUrl,
                 workspaceUsername: username,
@@ -722,11 +730,11 @@ describe(FIXTURE_NAME, () => {
         });
 
         await step(context)('Go to Action page', async () => {
-            await workspaceUi.goToActions({ page });
+            await workspace.goToActions({ page });
         });
 
         await step(context)('Click on "Create Account" MicroApp', async () => {
-            await workspaceUi.startAction({ page, actionName: 'Create Account' });
+            await workspace.startAction({ page, actionName: 'Create Account' });
         });
 
         await step(context)('Wait for Blade to load', async () => {
@@ -797,3 +805,25 @@ When test should wait for content to load, you can use either:
 
     await page.click('button2');
     ```
+
+### Examples for Integration Platform
+
+#### Search file in Workspace Search Bar
+
+```ts
+import { Workspace } from 'microapps-automation-helper';
+
+const workspace = new Workspace();
+
+await workspace.iwsSearchBar({ page, text: 'myFile', tab: 'OneDrive' });
+```
+
+#### Wait for shared file to show
+
+```ts
+import { Workspace } from 'microapps-automation-helper';
+
+const workspace = new Workspace();
+
+await workspace.WaitForSharedFile({ page, fullFileName: 'filename.png' });
+```
